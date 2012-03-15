@@ -1,1 +1,1 @@
-sort -n | countlines | swaplast | sort -gr | swaplast | thist
+sort -n | countlines.pl | swaplast.pl | sort -gr | swaplast.pl | thist.pl
