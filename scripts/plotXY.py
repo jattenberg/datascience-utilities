@@ -1,4 +1,9 @@
-#!/usr/bin/python
+#plotXY by @jattenberg, may 2012
+#
+# very simple alternative to gnuplot for plotting from the command line
+# able to read from a file (using the -f option) or read from a pipe
+
+
 import sys
 import numpy as np
 import matplotlib.pyplot as plt
@@ -19,9 +24,10 @@ parser.add_option('-x', '--xlabel',
                   action = 'store', dest = 'xlabel', default=False)
 parser.add_option('-y', '--ylabel',
                   action = 'store', dest = 'ylabel', default=False)
+parser.add_option('-L', '--logscale',
+                  action = 'store_true', dest = 'log_scale', default=False)
 
 (options, args) = parser.parse_args()
-
  
 input = open(options.filename, 'r') if options.filename else sys.stdin
 
@@ -29,9 +35,8 @@ xs = []
 ys = []
 for line in input:
     x, y = line.rstrip().split()
-    xs.append(log(float(x)))
-    ys.append(log(float(y)))
-
+    xs.append(log(float(x)) if options.log_scale else float(x))
+    ys.append(log(float(y)) if options.log_scale else float(y))
 
 marker = options.marker if options.marker else 'r.'
 
