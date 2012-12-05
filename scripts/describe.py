@@ -48,8 +48,8 @@ output = [
     present("Variance", mstats.variation(np_values)),
     present("Mode", mstats.mode(np_values)[0][0]),
     present("Skewness", mstats.skew(np_values)),
-    present("Kurtosis", mstats.kurtosis(np_values)),
-#    present("NormTest", mstats.normaltest(np_values)) 
+    present("Kurtosis", mstats.kurtosis(np_values))
     ]
 
 print "\n".join(output)
+
