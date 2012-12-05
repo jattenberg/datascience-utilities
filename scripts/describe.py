@@ -1,4 +1,4 @@
-#!/user/bin/python
+#!/usr/local/bin/python
 from scipy.stats import mstats
 import sys
 from optparse import OptionParser
@@ -9,10 +9,10 @@ def present(key, value):
     return key + " : " + str(value)
 
 def trimean(values):
-    return (mstats.scoreatpercentile(np_values, 25) + 2.0*mstats.scoreatpercentile(np_values, 50) + mstats.scoreatpercentile(np_values, 75))/4.0
+    return (mstats.scoreatpercentile(values, 25) + 2.0*mstats.scoreatpercentile(values, 50) + mstats.scoreatpercentile(values, 75))/4.0
 
 def midhinge(values):
-    return (mstats.scoreatpercentile(np_values, 25) + mstats.scoreatpercentile(np_values, 75))/2.0
+    return (mstats.scoreatpercentile(values, 25) + mstats.scoreatpercentile(values, 75))/2.0
 
 parser = OptionParser(usage="""presents a range of standard descriptive statistics
 on a single column of numerical data
