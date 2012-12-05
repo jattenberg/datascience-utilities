@@ -16,6 +16,7 @@ def midhinge(values):
 
 parser = OptionParser(usage="""presents a range of standard descriptive statistics
 on a single column of numerical data
+perl -e 'for($i = 0; $i < 10000; $i++){print rand(), "\n"}' | python describe.py | column -t
 Usage %prog [options]                                                                                
 """)
 
