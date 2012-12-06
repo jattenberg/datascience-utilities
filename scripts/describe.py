@@ -1,5 +1,5 @@
 #!/usr/local/bin/python
-from scipy.stats import mstats
+from scipy.stats import mstats, normaltest
 import sys
 from optparse import OptionParser
 import numpy as np
@@ -36,6 +36,7 @@ np_values = np.array(observed_values)
 
 output = [
     present("Length", len(np_values)),
+    present("Unique", len(np.unique(np_values))),
     present("Min", np_values.min()),
     present("Max", np_values.max()),
     present("Range", np_values.max() - np_values.min()),
@@ -48,7 +49,7 @@ output = [
     present("Variance", mstats.variation(np_values)),
     present("Mode", mstats.mode(np_values)[0][0]),
     present("Skewness", mstats.skew(np_values)),
-    present("Kurtosis", mstats.kurtosis(np_values))
+    present("Kurtosis", mstats.kurtosis(np_values)),
     ]
 
 print "\n".join(output)
