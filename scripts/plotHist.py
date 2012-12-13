@@ -1,5 +1,6 @@
-#plotXY by @jattenberg, Dec 2012
-#
+#plotHist by @jattenberg, Dec 2012
+#reads columns of floating point values in a file or a unix pipe
+#builds a histogram for each column and plots it
 
 
 import sys
@@ -29,6 +30,7 @@ input = open(options.filename, 'r') if options.filename else sys.stdin
 
 
 df = pd.read_csv(input)
-pd.tools.plotting.hist_frame(df.applymap(lambda x : log(x)) if options.log_scale else df, bins=int(options.bins))
+pd.tools.plotting.hist_frame(df.applymap(lambda x : log(x)) if options.log_scale else df,
+                             bins=int(options.bins))
 plt.show()
 
