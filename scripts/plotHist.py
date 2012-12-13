@@ -29,6 +29,6 @@ input = open(options.filename, 'r') if options.filename else sys.stdin
 
 
 df = pd.read_csv(input)
-pd.tools.plotting.hist_frame(df, bins=int(options.bins))
+pd.tools.plotting.hist_frame(df.applymap(lambda x : log(x)) if options.log_scale else df, bins=int(options.bins))
 plt.show()
 
