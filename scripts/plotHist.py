@@ -23,7 +23,7 @@ parser.add_option('-b', '--bins',
                   action='store', dest='bins', default=50)
 parser.add_option('-d', '--delim', 
                   action='store', dest='delim', default="\t")
-parser.add_option('-h', '--header', 
+parser.add_option('-H', '--header', 
                   action='store', dest='header', default=None)
 parser.add_option('-L', '--logscale',                                                                                                                                                                                                                                                                                      
                   action = 'store_true', dest = 'log_scale', default=False)
