@@ -24,7 +24,7 @@ parser.add_option('-b', '--bins',
 parser.add_option('-d', '--delim', 
                   action='store', dest='delim', default="\t")
 parser.add_option('-H', '--header', 
-                  action='store', dest='header', default=None)
+                  action='store_true', dest='header', default=None)
 parser.add_option('-L', '--logscale',                                                                                                                                                                                                                                                                                      
                   action = 'store_true', dest = 'log_scale', default=False)
 
@@ -33,7 +33,8 @@ parser.add_option('-L', '--logscale',
 input = open(options.filename, 'r') if options.filename else sys.stdin
 
 
-df = pd.read_csv(input, sep = options.delim, header = options.header)
+df = pd.read_csv(input, sep = options.delim,
+                 header = 0 if options.header else None)
 pd.tools.plotting.hist_frame(df.applymap(lambda x : log(x)) if options.log_scale else df,
                              bins=int(options.bins))
 plt.show()
