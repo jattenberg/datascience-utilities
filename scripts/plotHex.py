@@ -20,7 +20,7 @@ Usage %prog [options]
 parser.add_option('-f', '--file',
                   action = 'store', dest = 'filename', default=False)
 parser.add_option('-b', '--bins', 
-                  action='store', dest='bins', default=50)
+                  action='store', dest='bins', default=20)
 parser.add_option('-d', '--delim', 
                   action='store', dest='delim', default="\t")
 parser.add_option('-H', '--header', 
@@ -37,10 +37,9 @@ df = pd.read_csv(input, sep = options.delim,
                  header = 0 if options.header else None)
 
 
-#pd.tools.plotting.hist_frame(df.applymap(lambda x : log(x)) if options.log_scale else df,
-#                             bins=int(options.bins))
-
-hexbin(df[df.columns[0]].values, df[df.columns[1]].values, gridsize=20) 
+hexbin(df[df.columns[0]].values, df[df.columns[1]].values,
+       gridsize=int(options.bins),
+       bins="log" if options.log_scale else None) 
 xlabel(df.columns[0])
 ylabel(df.columns[1])
 colorbar()
