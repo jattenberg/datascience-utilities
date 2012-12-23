@@ -9,54 +9,86 @@ import numpy as np
 import matplotlib.pyplot as plt
 from math import log
 from optparse import OptionParser
+import pandas as pd
 
-#expects a list of pairs, x, #x
 
-parser = OptionParser(usage ="""                                                                 
-Generate a plot from new-line separated numerical data of the form x,[y]
-where [y] is a list of y values, each associated with the same x.
+parser = OptionParser(usage ="""
+Generate a plot from columnar numeric data. If no x value is specified, the index is used.
 Usage %prog [options]                                                                                
 """)
 parser.add_option('-f', '--file',
-                  action = 'store', dest = 'filename', default=False)
-parser.add_option('-m', '--marker',
-                  action = 'store', dest = 'marker', default=False)
-parser.add_option('-x', '--xlabel',
-                  action = 'store', dest = 'xlabel', default=False)
+                  action = 'store', dest = 'filename', default=False,
+                  help="[optional] use a specified file instead of reading from stdin")
+parser.add_option("-l", "--xlabel", dest='xlabel',
+                  action='store', default=False,
+                  help="label to use on the x axis")
 parser.add_option('-y', '--ylabel',
-                  action = 'store', dest = 'ylabel', default=False)
+                  action = 'store', dest = 'ylabel', default=False,
+                  help="label to use on the y axis")
 parser.add_option('-L', '--logscale',
-                  action = 'store_true', dest = 'log_scale', default=False)
+                  action = 'store_true', dest = 'log_scale', default=False,
+                  help="log scale values on both the x and y axis")
 parser.add_option('-X', '--semilogx',
-                  action = 'store_true', dest = 'semilogx', default=False)
+                  action = 'store_true', dest = 'semilogx', default=False,
+                  help="log scale values on the x axis")
 parser.add_option('-Y', '--semilogy',
-                  action = 'store_true', dest = 'semilogy', default=False)
+                  action = 'store_true', dest = 'semilogy', default=False,
+                  help="log scale values on the y axis")
+parser.add_option('-s', '--subplots',
+                  action = 'store_true', dest = 'subplots', default = False,
+                  help = "use several subplots to represent data rather than multiple lines overlapped")
+parser.add_option('-H', '--header',                                                                                                                       
+                  action = 'store_true', dest = 'header', default = None,                                                                                 
+                  help="treat the first row as column headers")                                                                                           
+parser.add_option('-d', '--delim',                                                                                                                        
+                  action='store', dest='delim', default="\t",                                                                                             
+                  help="delimiter seperating columns in input")
+parser.add_option('-c', '--cumulative',
+                  action='store_true', dest='cum', default=False,
+                  help = "store cumulative y values")
+parser.add_option('-x', '--xcol', dest='xcol',
+                  action='store', default=False,
+                  help = "use the specified column as the x-value in the generated plot. Can be a column name or column index (from 0)")
+parser.add_option('-S', '--sort',
+                  action = 'store_true', dest = 'sort', default = False,
+                  help = "sort the values in the x column")
 
 (options, args) = parser.parse_args()
  
 input = open(options.filename, 'r') if options.filename else sys.stdin
 
-xs = [] 
-ys = []
-cols = -1
+df = pd.read_csv(input, sep = options.delim,
+                 header = 0 if options.header else None)
+if options.cum:
+    df = df.cumsum()
 
-for line in input:
-    vals = line.rstrip().split()
-    x = vals.pop(0);
-    xs.append(log(float(x)) if options.log_scale or options.semilogx else float(x))
-    y = [log(float(z)) if options.log_scale or options.semilogy else float(z) for z in vals]
-    if cols == -1:
-        cols = len(y)
-    elif cols != len(y):
-        raise Exception("inconsistent number of x values. have observed %d and %d" % cols, len(y)) 
-    ys.append(y)
+xcolumn = df.index
 
-marker = options.marker if options.marker else 'r.'
+if options.xcol:
+    if options.xcol in df.columns:
+        xcolumn = df[options.xcol]
+    elif options.xcol.isdigit() and int(options.xcol) < df.shape[1]:
+        xcolumn = df.icol(int(options.xcol))
+    else:
+        raise InputError("unknown column: %s" % options.xcol)
 
-plt.figure()
-plt.plot(xs, ys, marker)
-if options.xlabel != False:
-    plt.xlabel(options.xlabel)
+ycolumns = df.drop(xcolumn.name, axis = 1) if options.xcol else df
+ycolumns.index = xcolumn
+
+if options.sort:
+    ycolumns.sort()
+
+
+ycolumns.plot(subplots=options.subplots,
+        x = ycolumns.index,
+        logx = True if options.semilogx or options.log_scale else False,
+        logy = True if options.semilogy or options.log_scale else False) 
+
+plt.legend(loc='best')
+
 if options.ylabel != False:
     plt.ylabel(options.ylabel)
+if options.xlabel != False:
+    plt.xlabel(options.xlabel)
+
 plt.show()
