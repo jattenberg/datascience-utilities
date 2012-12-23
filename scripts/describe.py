@@ -10,6 +10,7 @@ def get_data(column, np_values, alpha):
 
     mvs = bayes_mvs(np_values, alpha)
 
+    #report these metrics
     output = [
         present("Column", column),
         present("Length", len(np_values)),
@@ -37,6 +38,7 @@ def get_data(column, np_values, alpha):
         ]
     return output
 
+#this prints a bit nicer than tuples standard toString
 def tupleToString(tuple):
     return "(%s, %s)" % tuple
 
