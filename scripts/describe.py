@@ -1,5 +1,5 @@
 #!/usr/local/bin/python
-from scipy.stats import mstats, normaltest
+from scipy.stats import mstats, normaltest, sem
 import sys
 from optparse import OptionParser
 import numpy as np
@@ -22,9 +22,11 @@ def get_data(column, np_values):
         present("Minhinge", midhinge(np_values)),
         present("Mean", np_values.mean()),
         present("Variance", mstats.variation(np_values)),
+        present("StdDev", np.std(np_values)),
         present("Mode", mstats.mode(np_values)[0][0]),
         present("Skewness", mstats.skew(np_values)),
         present("Kurtosis", mstats.kurtosis(np_values)),
+        present("StdErr", sem(np_values)), 
         present("Normal-P-value", normaltest(np_values)[1])
         ]
     return output
