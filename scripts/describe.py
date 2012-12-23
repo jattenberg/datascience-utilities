@@ -50,19 +50,23 @@ def midhinge(values):
     return (stats.scoreatpercentile(values, 25) + stats.scoreatpercentile(values, 75))/2.0
 
 parser = OptionParser(usage="""presents a range of standard descriptive statistics
-on a single column of numerical data
-perl -e 'for($i = 0; $i < 20; $i++){print rand(), "\t", rand(), "\t", rand(), "\n"}' | python describe.py
+on columns of numerical data
+perl -e 'for($i = 0; $i < 20; $i++){print rand(), "\\t", rand(), "\\t", rand(), "\\n"}' | python describe.py
 Usage %prog [options]                                                                                
 """)
 
 parser.add_option('-f', '--file',
-                  action = 'store', dest = 'filename', default=False)
+                  action = 'store', dest = 'filename', default=False,
+                  help="[optional] use a specified file instead of reading from stdin")
 parser.add_option('-H', '--header', 
-                  action = 'store_true', dest = 'header', default = None)
+                  action = 'store_true', dest = 'header', default = None,
+                  help="treat the first row as column headers")
 parser.add_option('-d', '--delim',
-                  action='store', dest='delim', default="\t") 
+                  action='store', dest='delim', default="\t",
+                  help="delimiter seperating columns in input") 
 parser.add_option('-a', '--alpha',
-                  action='store', dest='alpha', default=0.9) 
+                  action='store', dest='alpha', default=0.9,
+                  help="confidence value used in interval estimation") 
 
 (options, args) = parser.parse_args()
 
