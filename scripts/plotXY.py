@@ -50,8 +50,8 @@ parser.add_option('-x', '--xcol', dest='xcol',
                   action='store', default=False,
                   help = "use the specified column as the x-value in the generated plot. Can be a column name or column index (from 0)")
 parser.add_option('-S', '--sort',
-                  action = 'store_true', dest = 'sort', default = False,
-                  help = "sort the values in the x column")
+                  action = 'store_false', dest = 'sort', default = True,
+                  help = "don't sort data by the values in the x column")
 
 (options, args) = parser.parse_args()
  
@@ -76,7 +76,7 @@ ycolumns = df.drop(xcolumn.name, axis = 1) if options.xcol else df
 ycolumns.index = xcolumn
 
 if options.sort:
-    ycolumns.sort()
+    ycolumns = ycolumns.sort()
 
 
 ycolumns.plot(subplots=options.subplots,
