@@ -1,5 +1,5 @@
 #!/usr/local/bin/python
-from scipy.stats import mstats, normaltest, sem, bayes_mvs
+from scipy.stats import stats, normaltest, sem, bayes_mvs
 import sys
 from optparse import OptionParser
 import numpy as np
@@ -24,14 +24,14 @@ def get_data(column, np_values, alpha):
         present("Var-CI", tupleToString(mvs[1][1])),
         present("StdDev", mvs[2][0]),
         present("Std-CI", tupleToString(mvs[2][1])),
-        present("Mode", mstats.mode(np_values)[0][0]),
-        present("Q1", mstats.scoreatpercentile(np_values, 25)),
-        present("Q2", mstats.scoreatpercentile(np_values, 50)),
-        present("Q3", mstats.scoreatpercentile(np_values, 75)),
+        present("Mode", stats.mode(np_values)[0][0]),
+        present("Q1", stats.scoreatpercentile(np_values, 25)),
+        present("Q2", stats.scoreatpercentile(np_values, 50)),
+        present("Q3", stats.scoreatpercentile(np_values, 75)),
         present("Trimean", trimean(np_values)),
         present("Minhinge", midhinge(np_values)),
-        present("Skewness", mstats.skew(np_values)),
-        present("Kurtosis", mstats.kurtosis(np_values)),
+        present("Skewness", stats.skew(np_values)),
+        present("Kurtosis", stats.kurtosis(np_values)),
         present("StdErr", sem(np_values)), 
         present("Normal-P-value", normaltest(np_values)[1]),
         ]
@@ -44,10 +44,10 @@ def present(key, value):
     return key + " : " + str(value)
 
 def trimean(values):
-    return (mstats.scoreatpercentile(values, 25) + 2.0*mstats.scoreatpercentile(values, 50) + mstats.scoreatpercentile(values, 75))/4.0
+    return (stats.scoreatpercentile(values, 25) + 2.0*stats.scoreatpercentile(values, 50) + stats.scoreatpercentile(values, 75))/4.0
 
 def midhinge(values):
-    return (mstats.scoreatpercentile(values, 25) + mstats.scoreatpercentile(values, 75))/2.0
+    return (stats.scoreatpercentile(values, 25) + stats.scoreatpercentile(values, 75))/2.0
 
 parser = OptionParser(usage="""presents a range of standard descriptive statistics
 on a single column of numerical data
