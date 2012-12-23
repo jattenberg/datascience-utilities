@@ -13,6 +13,7 @@ def get_data(column, np_values):
         present("Unique", len(np.unique(np_values))),
         present("Min", np_values.min()),
         present("Max", np_values.max()),
+        present("Mid-Range", (np_values.max() - np_values.min())/2),
         present("Range", np_values.max() - np_values.min()),
         present("Q1", mstats.scoreatpercentile(np_values, 25)),
         present("Q2", mstats.scoreatpercentile(np_values, 50)),
@@ -24,6 +25,7 @@ def get_data(column, np_values):
         present("Mode", mstats.mode(np_values)[0][0]),
         present("Skewness", mstats.skew(np_values)),
         present("Kurtosis", mstats.kurtosis(np_values)),
+        present("Normal-P-value", normaltest(np_values)[1])
         ]
     return output
 
