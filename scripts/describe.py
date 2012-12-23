@@ -18,9 +18,12 @@ def get_data(column, np_values, alpha):
         present("Max", np_values.max()),
         present("Mid-Range", (np_values.max() - np_values.min())/2),
         present("Range", np_values.max() - np_values.min()),
-        present("Mean", np_values.mean(), mvs[0][1]),
-        present("Variance", mvs[1][0], mvs[1][1]),
-        present("StdDev", mvs[2][0], mvs[2][1]),
+        present("Mean", np_values.mean()),
+        present("Mean-CI", tupleToString(mvs[0][1])),
+        present("Variance", mvs[1][0]),
+        present("Var-CI", tupleToString(mvs[1][1])),
+        present("StdDev", mvs[2][0]),
+        present("Std-CI", tupleToString(mvs[2][1])),
         present("Mode", mstats.mode(np_values)[0][0]),
         present("Q1", mstats.scoreatpercentile(np_values, 25)),
         present("Q2", mstats.scoreatpercentile(np_values, 50)),
@@ -34,11 +37,11 @@ def get_data(column, np_values, alpha):
         ]
     return output
 
-def present(key, value, bounds = None):
-    if bounds:
-        return key + " : " + str(value) + " : (%s, %s)" % (bounds[0], bounds[1]) 
-    else: 
-        return key + " : " + str(value)
+def tupleToString(tuple):
+    return "(%s, %s)" % tuple
+
+def present(key, value):
+    return key + " : " + str(value)
 
 def trimean(values):
     return (mstats.scoreatpercentile(values, 25) + 2.0*mstats.scoreatpercentile(values, 50) + mstats.scoreatpercentile(values, 75))/4.0
