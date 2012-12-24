@@ -76,7 +76,7 @@ ycolumns = df.drop(xcolumn.name, axis = 1) if options.xcol else df
 ycolumns.index = xcolumn
 
 if options.sort:
-    ycolumns = ycolumns.sort()
+    ycolumns = ycolumns.sort_index()
 
 
 ycolumns.plot(subplots=options.subplots,
