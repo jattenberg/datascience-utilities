@@ -70,7 +70,7 @@ if options.xcol:
     elif options.xcol.isdigit() and int(options.xcol) < df.shape[1]:
         xcolumn = df.icol(int(options.xcol))
     else:
-        raise InputError("unknown column: %s" % options.xcol)
+        raise LookupError("Unknown column: %s" % options.xcol)
 
 ycolumns = df.drop(xcolumn.name, axis = 1) if options.xcol else df
 ycolumns.index = xcolumn
