@@ -30,7 +30,7 @@ parser.add_option('-H', '--header',
                   help="treat the first row as column headers")
 parser.add_option('-L', '--logscale',                                                                                                                                                                                                                                                                                      
                   action = 'store_true', dest = 'log_scale', default=False,
-                  help="store log counts in each bin in the histogram")
+                  help="use log values when for constructing histogram")
 parser.add_option('-x', '--xval',
                  action = 'store', dest = 'x', default = "0",
                  help = "column used for the x axis")
