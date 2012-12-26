@@ -4,7 +4,7 @@ import sys
 from optparse import OptionParser
 import numpy as np
 import pandas as pd
-
+from math import log
 
 def get_data(column, np_values, alpha):
 
@@ -34,7 +34,7 @@ def get_data(column, np_values, alpha):
         present("Skewness", stats.skew(np_values)),
         present("Kurtosis", stats.kurtosis(np_values)),
         present("StdErr", sem(np_values)),
-        present("Normal-P-value", normaltest(np_values)[1]),
+        present("Normal-P-value", normaltest(np_values)[1])
         ]
     return output
 
@@ -81,7 +81,7 @@ description = []
 for column in df.columns:
     #only consider numeric columns
     if df[column].dtype.kind == 'i' or df[column].dtype.kind == 'f':
-        output = get_data(column, df[column].values, float(options.alpha))
+        output = get_data(column, df[column], float(options.alpha))
         description.append("\n".join(output))
 
 print "\n\n".join(description)
