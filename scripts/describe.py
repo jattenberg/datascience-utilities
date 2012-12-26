@@ -6,6 +6,14 @@ import numpy as np
 import pandas as pd
 from math import log
 
+def get_nonnumeric(column, np_values):
+
+    data = column.describe();
+    output = [ present("Column", column) ]
+    for id in data.index:
+        output.append(present(id, data[id]))
+    return output
+
 def get_data(column, np_values, alpha):
 
     mvs = bayes_mvs(np_values, alpha)
@@ -83,6 +91,9 @@ for column in df.columns:
     if df[column].dtype.kind == 'i' or df[column].dtype.kind == 'f':
         output = get_data(column, df[column], float(options.alpha))
         description.append("\n".join(output))
+    else:
+        output = get_nonnumeric(column, df[column])
+        discription.append("\n", join(output))
 
 print "\n\n".join(description)
 
