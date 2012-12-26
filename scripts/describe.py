@@ -11,7 +11,7 @@ def get_nonnumeric(column, np_values):
     data = np_values.describe();
     output = [ present("Column", column) ]
     for id in data.index:
-        output.append(present(id, data[id]))
+        output.append(present(id.capitalize(), data[id]))
     return output
 
 def get_data(column, np_values, alpha):
