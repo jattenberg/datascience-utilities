@@ -86,10 +86,12 @@ df = pd.read_csv(input, sep = options.delim,
                  header = 0 if options.header else None)
 
 description = []
+num_columns = []
 for column in df.columns:
     #only consider numeric columns
     if df[column].dtype.kind == 'i' or df[column].dtype.kind == 'f':
         output = get_data(column, df[column], float(options.alpha))
+        num_columns.append(column)
         description.append("\n".join(output))
     else:
         output = get_nonnumeric(column, df[column])
@@ -97,3 +99,8 @@ for column in df.columns:
 
 print "\n\n".join(description)
 
+print "\n\nCovariances:"
+print df[num_columns].cov()
+
+print "\n\nCorrelations:"
+print df[num_columns].corr()
