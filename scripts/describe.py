@@ -102,7 +102,7 @@ for column in df.columns:
 
 print "\n\n".join(description)
 
-if not options.simple:
+if not options.simple and df.shape[1] > 1:
     print "\n\nCovariances:"
     print df[num_columns].cov()
 
