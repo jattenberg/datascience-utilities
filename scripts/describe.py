@@ -77,6 +77,9 @@ parser.add_option('-d', '--delim',
 parser.add_option('-a', '--alpha',
                   action='store', dest='alpha', default=0.9,
                   help="confidence value used in interval estimation") 
+parser.add_option('-s', '--simple', 
+                  action = 'store_true', dest = 'simple', default = False,
+                  help="abbreviated, simplified output")
 
 (options, args) = parser.parse_args()
 
@@ -99,8 +102,9 @@ for column in df.columns:
 
 print "\n\n".join(description)
 
-print "\n\nCovariances:"
-print df[num_columns].cov()
+if not options.simple:
+    print "\n\nCovariances:"
+    print df[num_columns].cov()
 
-print "\n\nCorrelations:"
-print df[num_columns].corr()
+    print "\n\nCorrelations:"
+    print df[num_columns].corr()
