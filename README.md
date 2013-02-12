@@ -12,3 +12,12 @@ plotHist.py: plots a histogram of values on the input columns
 plotLines.py: line plots of the input columns
 
 plotHex.py: Hex plots- 2D histograms on the crossproduct of input columns
+
+
+requirements:
+numpy
+scipy
+pandas
+matplotlib
+
+only tested with python 2.7
