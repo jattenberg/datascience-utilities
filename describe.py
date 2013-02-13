@@ -59,6 +59,33 @@ def trimean(values):
 def midhinge(values):
     return (stats.scoreatpercentile(values, 25) + stats.scoreatpercentile(values, 75))/2.0
 
+
+def relations(df, num_columns, output):
+    output.append( "\nCovariances:" )
+    output.append( str(df[num_columns].cov()) )
+
+    output.append( "\nCorrelations:" )
+    output.append( str(df[num_columns].corr()) )
+
+
+def gather_descriptions(df, description):
+
+    num_columns = []    
+    for column in df.columns:
+        #only consider numeric columns
+
+        if df[column].dtype.kind == 'i' or df[column].dtype.kind == 'f':
+
+            output = get_data(column, df[column], float(options.alpha))
+            num_columns.append(column)
+            description.append("\n".join(output))
+        else:
+            output = get_nonnumeric(column, df[column])
+            description.append("\n".join(output))
+
+    if not options.simple and df.shape[1] > 1 and len(num_columns) > 1:
+        relations(df, num_columns, description)
+
 parser = OptionParser(usage="""presents a range of standard descriptive statistics
 on columns of numerical data
 perl -e 'for($i = 0; $i < 20; $i++){print rand(), "\\t", rand(), "\\t", rand(), "\\n"}' | python describe.py
@@ -81,6 +108,7 @@ parser.add_option('-s', '--simple',
                   action = 'store_true', dest = 'simple', default = False,
                   help="abbreviated, simplified output")
 
+
 (options, args) = parser.parse_args()
 
 input = open(options.filename, 'r') if options.filename else sys.stdin
@@ -89,22 +117,8 @@ df = pd.read_csv(input, sep = options.delim,
                  header = 0 if options.header else None)
 
 description = []
-num_columns = []
-for column in df.columns:
-    #only consider numeric columns
-    if df[column].dtype.kind == 'i' or df[column].dtype.kind == 'f':
-        output = get_data(column, df[column], float(options.alpha))
-        num_columns.append(column)
-        description.append("\n".join(output))
-    else:
-        output = get_nonnumeric(column, df[column])
-        description.append("\n".join(output))
+
+gather_descriptions(df, description)
 
 print "\n\n".join(description)
 
-if not options.simple and df.shape[1] > 1:
-    print "\n\nCovariances:"
-    print df[num_columns].cov()
-
-    print "\n\nCorrelations:"
-    print df[num_columns].corr()
