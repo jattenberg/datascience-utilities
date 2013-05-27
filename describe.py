@@ -95,6 +95,9 @@ Usage %prog [options]
 parser.add_option('-f', '--file',
                   action = 'store', dest = 'filename', default=False,
                   help="[optional] use a specified file instead of reading from stdin")
+parser.add_option('-o', '--out',
+                  action = 'store', dest = 'out', default=False,
+                  help="[optional] write to a specified file instead of stdout")
 parser.add_option('-H', '--header', 
                   action = 'store_true', dest = 'header', default = None,
                   help="treat the first row as column headers")
@@ -113,6 +116,8 @@ parser.add_option('-s', '--simple',
 
 input = open(options.filename, 'r') if options.filename else sys.stdin
 
+out = open(options.out, 'r') if options.out else sys.stdout
+
 df = pd.read_csv(input, sep = options.delim,
                  header = 0 if options.header else None)
 
@@ -120,5 +125,8 @@ description = []
 
 gather_descriptions(df, description)
 
-print "\n\n".join(description)
+out.write( "\n\n".join(description) + "\n")
+out.flush()
+out.close()
+input.close()
 
