@@ -1,5 +1,7 @@
 Various data analysis scripts, useful for command line data mining and exploration. Most scripts work on csv numeric data, with some configurable separator, defaulting to \t, with optional header-handling. 
 
+Available under the [MIT License](http://opensource.org/licenses/MIT)
+
 Some useful examples:
 
 + `describe.py`: provides a wide variety of descriptive statistics to each column. Good for quick summary analysis.
