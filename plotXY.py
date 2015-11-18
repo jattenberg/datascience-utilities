@@ -27,10 +27,11 @@ THE SOFTWARE.
 
 import sys
 import numpy as np
-import matplotlib.pyplot as plt
 from math import log
 from optparse import OptionParser
 import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
 
 
 parser = OptionParser(usage ="""
@@ -99,11 +100,10 @@ ycolumns.index = xcolumn
 if options.sort:
     ycolumns = ycolumns.sort_index()
 
-
 ycolumns.plot(subplots=options.subplots,
-        x = ycolumns.index,
-        logx = True if options.semilogx or options.log_scale else False,
-        logy = True if options.semilogy or options.log_scale else False) 
+              x = ycolumns.index,
+              logx = True if options.semilogx or options.log_scale else False,
+              logy = True if options.semilogy or options.log_scale else False) 
 
 plt.legend(loc='best')
 
@@ -112,4 +112,5 @@ if options.ylabel != False:
 if options.xlabel != False:
     plt.xlabel(options.xlabel)
 
+sns.set_style("darkgrid")
 plt.show()
