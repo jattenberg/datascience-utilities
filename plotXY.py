@@ -31,7 +31,6 @@ from math import log
 from optparse import OptionParser
 import pandas as pd
 import matplotlib.pyplot as plt
-import seaborn as sns
 
 
 parser = OptionParser(usage ="""
@@ -112,5 +111,9 @@ if options.ylabel != False:
 if options.xlabel != False:
     plt.xlabel(options.xlabel)
 
-sns.set_style("darkgrid")
+try:
+    import seaborn as sns
+    sns.set_style("darkgrid")
+except:
+    pass
 plt.show()
