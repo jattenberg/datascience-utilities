@@ -37,8 +37,14 @@ parser.add_option("-m", "--mean", action = 'store', dest = 'mean', default = 0,
                   help = "mean of the generating distribution")
 parser.add_option("-s", "--stddev", action = 'store', dest = 'std', default = 1,
                   help = "standard deviation of the generating distribution")
+parser.add_option("-D", "--dim", action = 'store', dest = 'dim', default = 1,
+                  help = "dimension- number of draws per line")
+parser.add_option("-d", "--delim", action = 'store', dest = 'delim', default = "\t",
+                  help = "delimiter to separate columns in multidimensional output")
 
 (options, args) = parser.parse_args()
 
+assert int(options.dim) > 0
+
 for i in range(int(options.num)):
-    print normal(float(options.mean), float(options.std))
+    print options.delim.join(["%s" % normal(float(options.mean), float(options.std)) for x in range(int(options.dim))])
