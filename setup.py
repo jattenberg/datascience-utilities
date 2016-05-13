@@ -1,4 +1,4 @@
-from distutils.core import setup
+from setuptools import setup, find_packages
 
 setup(name='datascience-utils',
       version='1.0',
@@ -6,5 +6,12 @@ setup(name='datascience-utils',
       author="josh attenberg",
       author_email="jattenbe@stern.nyu.edu",
       url="https://github.com/jattenberg/datascience-utilities",
-      packages=['datascience-utils']
-)
+      packages=find_packages(),
+      install_requires=[
+        'pandas',
+        'scipy',
+        'numpy',
+        'matplotlib',
+        'seaborn'
+      ]
+      )
