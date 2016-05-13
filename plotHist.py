@@ -29,7 +29,7 @@ import matplotlib.pyplot as plt
 from math import log
 import pandas as pd
 from optparse import OptionParser
-
+import seaborn as sns
 
 #expects a list of pairs, x, #x
 
@@ -48,6 +48,9 @@ parser.add_option('-H', '--header',
                   action='store_true', dest='header', default=None)
 parser.add_option('-L', '--logscale',                                                                                                                                                                                                                                                                                      
                   action = 'store_true', dest = 'log_scale', default=False)
+parser.add_option('-o', '--out', dest='out',
+                  action='store', default=False,
+                  help = "optional file path for saving the image")
 
 (options, args) = parser.parse_args()
  
@@ -58,5 +61,16 @@ df = pd.read_csv(input, sep = options.delim,
                  header = 0 if options.header else None)
 pd.tools.plotting.hist_frame(df.applymap(lambda x : log(x)) if options.log_scale else df,
                              bins=int(options.bins))
-plt.show()
+
+try:
+    import seaborn as sns
+    sns.set_style("darkgrid")
+except:
+    pass
+
+if options.out:
+    plt.savefig(options.out)
+else:
+    plt.show()
+
 

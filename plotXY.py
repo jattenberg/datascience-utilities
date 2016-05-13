@@ -58,11 +58,11 @@ parser.add_option('-Y', '--semilogy',
 parser.add_option('-s', '--subplots',
                   action = 'store_true', dest = 'subplots', default = False,
                   help = "use several subplots to represent data rather than multiple lines overlapped")
-parser.add_option('-H', '--header',                                                                                                                       
-                  action = 'store_true', dest = 'header', default = None,                                                                                 
-                  help="treat the first row as column headers")                                                                                           
-parser.add_option('-d', '--delim',                                                                                                                        
-                  action='store', dest='delim', default="\t",                                                                                             
+parser.add_option('-H', '--header',
+                  action = 'store_true', dest = 'header', default = None,
+                  help="treat the first row as column headers")
+parser.add_option('-d', '--delim',
+                  action='store', dest='delim', default="\t",
                   help="delimiter seperating columns in input")
 parser.add_option('-c', '--cumulative',
                   action='store_true', dest='cum', default=False,
@@ -70,6 +70,9 @@ parser.add_option('-c', '--cumulative',
 parser.add_option('-x', '--xcol', dest='xcol',
                   action='store', default=False,
                   help = "use the specified column as the x-value in the generated plot. Can be a column name or column index (from 0)")
+parser.add_option('-o', '--out', dest='out',
+                  action='store', default=False,
+                  help = "optional file path for saving the image")
 parser.add_option('-S', '--sort',
                   action = 'store_false', dest = 'sort', default = True,
                   help = "don't sort data by the values in the x column")
@@ -116,4 +119,8 @@ try:
     sns.set_style("darkgrid")
 except:
     pass
-plt.show()
+
+if options.out:
+    plt.savefig(options.out)
+else:
+    plt.show()

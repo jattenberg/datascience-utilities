@@ -29,7 +29,7 @@ from math import log
 import pandas as pd
 from optparse import OptionParser
 from matplotlib.pyplot import *
-
+import seaborn as sns
 
 
 
@@ -59,7 +59,9 @@ parser.add_option('-x', '--xval',
 parser.add_option('-y', '--yval',
                  action = 'store', dest = 'y', default = "1",
                  help = "column used for the y axis")
-
+parser.add_option('-o', '--out', dest='out',
+                  action='store', default=False,
+                  help = "optional file path for saving the image")
 
 (options, args) = parser.parse_args()
  
@@ -68,8 +70,6 @@ input = open(options.filename, 'r') if options.filename else sys.stdin
 
 df = pd.read_csv(input, sep = options.delim,
                  header = 0 if options.header else None)
-
-
 
 if options.x in df.columns:
     x = df[options.x]
@@ -92,5 +92,15 @@ hexbin(x.values, y.values,
 xlabel(x.name)
 ylabel(y.name)
 colorbar()
-show()
+
+try:
+    import seaborn as sns
+    sns.set_style("darkgrid")
+except:
+    pass
+
+if options.out:
+    savefig(options.out)
+else:
+    show()
 
