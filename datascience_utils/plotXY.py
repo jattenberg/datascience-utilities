@@ -31,7 +31,7 @@ from math import log
 from optparse import OptionParser
 import pandas as pd
 import matplotlib.pyplot as plt
-
+import seaborn as sns
 
 parser = OptionParser(usage ="""
 Generate a plot from columnar numeric data. If no x value is specified, the index is used.
@@ -87,8 +87,10 @@ if options.cum:
     df = df.cumsum()
 
 xcolumn = df.index
+count = df.shape[1]
 
 if options.xcol:
+    count = df.shape[1] - 1
     if options.xcol in df.columns:
         xcolumn = df[options.xcol]
     elif options.xcol.isdigit() and int(options.xcol) < df.shape[1]:
@@ -102,8 +104,19 @@ ycolumns.index = xcolumn
 if options.sort:
     ycolumns = ycolumns.sort_index()
 
+styles=[ '-', '--', '.-','s-','o-','^-']
+colors=['b', 'r', 'y', 'k', 'c']
+
+plt_styles = []
+for i in range(count):
+    style = styles[i%len(styles)]
+    color = colors[i%len(colors)]
+    plt_styles.append(color+style)
+
+
 ycolumns.plot(subplots=options.subplots,
               x = ycolumns.index,
+              style = plt_styles,
               logx = True if options.semilogx or options.log_scale else False,
               logy = True if options.semilogy or options.log_scale else False) 
 
@@ -114,11 +127,7 @@ if options.ylabel != False:
 if options.xlabel != False:
     plt.xlabel(options.xlabel)
 
-try:
-    import seaborn as sns
-    sns.set_style("darkgrid")
-except:
-    pass
+sns.set_style("darkgrid")
 
 if options.out:
     plt.savefig(options.out)

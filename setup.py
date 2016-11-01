@@ -1,6 +1,6 @@
 from setuptools import setup, find_packages
 
-setup(name='datascience-utils',
+setup(name='datascience_utils',
       version='1.0',
       description="Various data analysis scripts, useful for command line data mining and exploration. Most scripts work on csv numeric data with some configurable separator, defaulting to \t, with optional header-handling.",
       author="josh attenberg",
