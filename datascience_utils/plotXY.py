@@ -24,6 +24,9 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 """
+import matplotlib
+matplotlib.use('TkAgg') 
+
 import sys
 import numpy as np
 from math import log
@@ -82,6 +85,8 @@ parser.add_option('-o', '--out', dest='out',
 parser.add_option('-S', '--sort',
                   action = 'store_false', dest = 'sort', default = True,
                   help = "don't sort data by the values in the x column")
+
+
 
 (options, args) = parser.parse_args()
  
