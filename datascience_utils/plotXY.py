@@ -1,3 +1,4 @@
+
 #plotXY by @jattenberg, may 2012
 #
 # very simple alternative to gnuplot for plotting from the command line
@@ -23,8 +24,6 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 """
-
-
 import sys
 import numpy as np
 from math import log
@@ -58,6 +57,9 @@ parser.add_option('-Y', '--semilogy',
 parser.add_option('-s', '--subplots',
                   action = 'store_true', dest = 'subplots', default = False,
                   help = "use several subplots to represent data rather than multiple lines overlapped")
+parser.add_option('-m', '--symbols',
+                  action = 'store_true', dest = 'symbols', default = False,
+                  help = "use symbols to denote the actual data points in the plot")
 parser.add_option('-H', '--header',
                   action = 'store_true', dest = 'header', default = None,
                   help="treat the first row as column headers")
@@ -109,10 +111,12 @@ colors=['b', 'r', 'y', 'k', 'c']
 
 plt_styles = []
 for i in range(count):
-    style = styles[i%len(styles)]
+    if options.symbols:
+        style = styles[i%len(styles)]
+    else:
+        style = ""
     color = colors[i%len(colors)]
     plt_styles.append(color+style)
-
 
 ycolumns.plot(subplots=options.subplots,
               x = ycolumns.index,
