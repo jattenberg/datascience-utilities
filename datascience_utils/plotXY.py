@@ -31,6 +31,7 @@ from optparse import OptionParser
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
+from statsmodels.nonparametric.smoothers_lowess import lowess
 
 parser = OptionParser(usage ="""
 Generate a plot from columnar numeric data. If no x value is specified, the index is used.
@@ -60,6 +61,9 @@ parser.add_option('-s', '--subplots',
 parser.add_option('-m', '--symbols',
                   action = 'store_true', dest = 'symbols', default = False,
                   help = "use symbols to denote the actual data points in the plot")
+parser.add_option('-O', '--smoothing',
+                  action = 'store_true', dest = 'smoothing', default = False,
+                  help = "smooth out the data using lowess regression")
 parser.add_option('-H', '--header',
                   action = 'store_true', dest = 'header', default = None,
                   help="treat the first row as column headers")
@@ -107,7 +111,7 @@ if options.sort:
     ycolumns = ycolumns.sort_index()
 
 styles=[ '-', '--', '.-','s-','o-','^-']
-colors=['b', 'r', 'y', 'k', 'c']
+colors=['b', 'r', 'y', 'k', 'c', 'm']
 
 plt_styles = []
 for i in range(count):
@@ -117,6 +121,10 @@ for i in range(count):
         style = ""
     color = colors[i%len(colors)]
     plt_styles.append(color+style)
+
+if options.smoothing:
+    for col in ycolumns.columns.values:
+        ycolumns[col] = lowess(ycolumns[col].values, ycolumns.index, return_sorted=False, frac=0.05)
 
 ycolumns.plot(subplots=options.subplots,
               x = ycolumns.index,
