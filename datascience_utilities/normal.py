@@ -47,4 +47,4 @@ parser.add_option("-d", "--delim", action = 'store', dest = 'delim', default = "
 assert int(options.dim) > 0
 
 for i in range(int(options.num)):
-    print options.delim.join(["%s" % normal(float(options.mean), float(options.std)) for x in range(int(options.dim))])
+    print (options.delim.join(["%s" % normal(float(options.mean), float(options.std)) for x in range(int(options.dim))]))

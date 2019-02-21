@@ -91,7 +91,7 @@ def relations(df, num_columns, output):
     output.append( str(df[num_columns].corr()) )
 
 
-def gather_descriptions(df, description):
+def gather_descriptions(df, description, options):
 
     num_columns = []    
     for column in df.columns:
@@ -109,47 +109,54 @@ def gather_descriptions(df, description):
     if not options.simple and df.shape[1] > 1 and len(num_columns) > 1:
         relations(df, num_columns, description)
 
-parser = OptionParser(usage="""presents a range of standard descriptive statistics
-on columns of numerical data
-perl -e 'for($i = 0; $i < 20; $i++){print rand(), "\\t", rand(), "\\t", rand(), "\\n"}' | python describe.py
-Usage %prog [options]                                                                                
-""")
+def get_parser():
+    parser = OptionParser(usage="""presents a range of standard descriptive statistics
+    on columns of numerical data
+    perl -e 'for($i = 0; $i < 20; $i++){print rand(), "\\t", rand(), "\\t", rand(), "\\n"}' | python describe.py
+    Usage %prog [options]                                                                                
+    """)
+    
+    parser.add_option('-f', '--file',
+                      action = 'store', dest = 'filename', default=False,
+                      help="[optional] use a specified file instead of reading from stdin")
+    parser.add_option('-o', '--out',
+                      action = 'store', dest = 'out', default=False,
+                      help="[optional] write to a specified file instead of stdout")
+    parser.add_option('-H', '--header', 
+                      action = 'store_true', dest = 'header', default = None,
+                      help="treat the first row as column headers")
+    parser.add_option('-d', '--delim',
+                      action='store', dest='delim', default="\t",
+                      help="delimiter seperating columns in input") 
+    parser.add_option('-a', '--alpha',
+                      action='store', dest='alpha', default=0.9,
+                      help="confidence value used in interval estimation") 
+    parser.add_option('-s', '--simple', 
+                      action = 'store_true', dest = 'simple', default = False,
+                      help="abbreviated, simplified output")
 
-parser.add_option('-f', '--file',
-                  action = 'store', dest = 'filename', default=False,
-                  help="[optional] use a specified file instead of reading from stdin")
-parser.add_option('-o', '--out',
-                  action = 'store', dest = 'out', default=False,
-                  help="[optional] write to a specified file instead of stdout")
-parser.add_option('-H', '--header', 
-                  action = 'store_true', dest = 'header', default = None,
-                  help="treat the first row as column headers")
-parser.add_option('-d', '--delim',
-                  action='store', dest='delim', default="\t",
-                  help="delimiter seperating columns in input") 
-parser.add_option('-a', '--alpha',
-                  action='store', dest='alpha', default=0.9,
-                  help="confidence value used in interval estimation") 
-parser.add_option('-s', '--simple', 
-                  action = 'store_true', dest = 'simple', default = False,
-                  help="abbreviated, simplified output")
+    return parser
 
+def main():
 
-(options, args) = parser.parse_args()
+    (options, args) = get_parser().parse_args()
 
-input = open(options.filename, 'r') if options.filename else sys.stdin
+    input = open(options.filename, 'r') if options.filename else sys.stdin
 
-out = open(options.out, 'r') if options.out else sys.stdout
+    out = open(options.out, 'r') if options.out else sys.stdout
 
-df = pd.read_csv(input, sep = options.delim,
-                 header = 0 if options.header else None)
+    df = pd.read_csv(input, sep = options.delim,
+                     header = 0 if options.header else None)
 
-description = []
+    description = []
 
-gather_descriptions(df, description)
+    gather_descriptions(df, description, options)
 
-out.write( "\n\n".join(description) + "\n")
-out.flush()
-out.close()
-input.close()
+    out.write( "\n\n".join(description) + "\n")
+    out.flush()
+    out.close()
+    input.close()
+
+if __name__ == '__main__':
+    main()
 
