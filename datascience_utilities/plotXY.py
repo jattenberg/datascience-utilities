@@ -99,7 +99,6 @@ def main():
     df = pd.read_csv(input, sep = options.delim,
                      header = 0 if options.header else None)
 
-    print (df)
     if options.cum:
         df = df.cumsum()
 
@@ -111,7 +110,7 @@ def main():
         if options.xcol in df.columns:
             xcolumn = df[options.xcol]
         elif options.xcol.isdigit() and int(options.xcol) < df.shape[1]:
-            xcolumn = df.icol(int(options.xcol))
+            xcolumn = df.iloc[:,int(options.xcol)]
         else:
             raise LookupError("Unknown column: %s" % options.xcol)
 
@@ -138,7 +137,6 @@ def main():
             ycolumns[col] = lowess(ycolumns[col].values, ycolumns.index, return_sorted=False, frac=0.05)
 
     ycolumns.plot(subplots=options.subplots,
-                  x = ycolumns.index,
                   style = plt_styles,
                   logx = options.semilogx or options.log_scale,
                   logy = options.semilogy or options.log_scale) 

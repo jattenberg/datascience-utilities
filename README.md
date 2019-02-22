@@ -1,25 +1,33 @@
-Various data analysis scripts, useful for command line data mining and exploration. Most scripts work on csv numeric data, with some configurable separator, defaulting to \t, with optional header-handling. 
+DATASCIENCE UTILITIES
+=====================
 
-Available under the [MIT License](http://opensource.org/licenses/MIT)
+A set of command line tools for data analysis, data mining and exploration. Most scripts are designed to work on columnar numeric data, for instance CSV data, with a configurable separator (defaulting to \t) and with an optional separator
 
-Some useful examples:
-
-+ `describe.py`: provides a wide variety of descriptive statistics to each column. Good for quick summary analysis.
-reservoirSampling.py: samples rows from input, works for numeric and non-numeric data
-
-+ `shuffleLines.pl`: shuffles the input data (in memory)
-
-+ `plotHist.py`: plots a histogram of values on the input columns
-
-+ `plotLines.py`: line plots of the input columns
-
-+ `plotHex.py`: Hex plots- 2D histograms on the crossproduct of input columns
+Requirements:
+=============
+- Python 3.6. Other versions of python my work, but this is what I've tested with
+- virtualenv
+- pip
 
 
-requirements:
-numpy
-scipy
-pandas
-matplotlib
+Building:
+=========
 
-only tested with python 2.7
+Just run `./build.sh`! This builds the virtualenv and installs the library in that env.
+The script also outputs several aliases that you may want to put in your shell profile for convenience. 
+
+
+Some Useful Tools:
+==================
+
++ `describe`: provides a wide variety of descriptive statistics to each column. Good for quick summary analysis.
+
++ reservoir_sampling: samples a specified number of rows from input, works for numeric and non-numeric data
+
++ `shuffle_lines`: shuffles the input data (in memory)
+
++ `plot_hist`: plots a histogram of values on the input columns
+
++ `plot_lines`: line plots of the input columns
+
++ `plot_hex`: Hex plots- 2D histograms on the crossproduct of input columns
