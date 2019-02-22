@@ -23,7 +23,7 @@ setup(name='datascience-utilities',
               "describe=datascience_utilities.describe:main",
               "ztest=datascience_utilities.ztest:main",
               "normal=datascience_utilities.normal:main",
-              "reservoir_sample=datascience_utilities.reservoirSampling"
+              "reservoir_sample=datascience_utilities.reservoirSampling:main"
           ]
       }
 )
