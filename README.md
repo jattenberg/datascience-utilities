@@ -33,8 +33,13 @@ Some Useful Tools:
 + `plot_hex`: Hex plots- 2D histograms on the crossproduct of input columns
 
 
-
+Examples:
+=========
 
 `normal | shuffle_lines | reservoir_sample -n 5`
 
 `normal -D 2 | plot_hex`
+
+`perl -e  'for ($i = 0; $i < 100; $i ++) { print rand(), "\t", ('a'..'z')[int(rand()*26)], "\t", 50*rand(), "\n" } ' | describe`
+
+`perl -e  'BEGIN{print "SHOES\tGLASSES\n"} for ($i = 0; $i < 100; $i ++) { print rand(), "\t", 50*rand(), "\n" } ' | plot_xy -O -H`
