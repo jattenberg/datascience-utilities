@@ -31,3 +31,8 @@ Some Useful Tools:
 + `plot_lines`: line plots of the input columns
 
 + `plot_hex`: Hex plots- 2D histograms on the crossproduct of input columns
+
+
+
+
+`normal | shuffle_lines | reservoir_sample -n 5`
