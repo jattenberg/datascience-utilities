@@ -27,24 +27,31 @@ from optparse import OptionParser
 from numpy.random import normal
 
 
-parser = OptionParser("""generates a number of draws from a gaussian distribution.
-Observations are separated by new lines.
-Usage: %prog [options]""")
+def get_parser():
+    parser = OptionParser("""generates a number of draws from a gaussian distribution.
+    Observations are separated by new lines.
+    Usage: %prog [options]""")
 
-parser.add_option("-n", "--number", action = 'store', dest = 'num', default = 100,
-                  help = "number of draws to make")
-parser.add_option("-m", "--mean", action = 'store', dest = 'mean', default = 0,
-                  help = "mean of the generating distribution")
-parser.add_option("-s", "--stddev", action = 'store', dest = 'std', default = 1,
-                  help = "standard deviation of the generating distribution")
-parser.add_option("-D", "--dim", action = 'store', dest = 'dim', default = 1,
-                  help = "dimension- number of draws per line")
-parser.add_option("-d", "--delim", action = 'store', dest = 'delim', default = "\t",
-                  help = "delimiter to separate columns in multidimensional output")
+    parser.add_option("-n", "--number", action = 'store', dest = 'num', default = 100,
+                      help = "number of draws to make")
+    parser.add_option("-m", "--mean", action = 'store', dest = 'mean', default = 0,
+                      help = "mean of the generating distribution")
+    parser.add_option("-s", "--stddev", action = 'store', dest = 'std', default = 1,
+                      help = "standard deviation of the generating distribution")
+    parser.add_option("-D", "--dim", action = 'store', dest = 'dim', default = 1,
+                      help = "dimension- number of draws per line")
+    parser.add_option("-d", "--delim", action = 'store', dest = 'delim', default = "\t",
+                      help = "delimiter to separate columns in multidimensional output")
+    return parser
 
-(options, args) = parser.parse_args()
+def main():
+    
+    (options, args) = get_parser().parse_args()
 
-assert int(options.dim) > 0
+    assert int(options.dim) > 0
 
-for i in range(int(options.num)):
-    print (options.delim.join(["%s" % normal(float(options.mean), float(options.std)) for x in range(int(options.dim))]))
+    for i in range(int(options.num)):
+        print (options.delim.join(["%s" % normal(float(options.mean), float(options.std)) for x in range(int(options.dim))]))
+
+if __name__ == "__main__":
+    main()
