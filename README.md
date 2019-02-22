@@ -36,3 +36,5 @@ Some Useful Tools:
 
 
 `normal | shuffle_lines | reservoir_sample -n 5`
+
+`normal -D 2 | plot_hex`
