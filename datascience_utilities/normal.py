@@ -24,7 +24,7 @@ THE SOFTWARE.
 """
 
 from optparse import OptionParser
-from numpy.random import normal
+from numpy.random import normal, lognormal
 
 
 def get_parser():
@@ -42,6 +42,8 @@ def get_parser():
                       help = "dimension- number of draws per line")
     parser.add_option("-d", "--delim", action = 'store', dest = 'delim', default = "\t",
                       help = "delimiter to separate columns in multidimensional output")
+    parser.add_option("-L", "--lognormal", action = 'store_true', dest = 'lognormal',
+                      help = "sample from the log-normal distribution instead of the normal distribution")
     return parser
 
 def main():
@@ -50,8 +52,10 @@ def main():
 
     assert int(options.dim) > 0
 
+    dist = lognormal if options.lognormal else normal
+
     for i in range(int(options.num)):
-        print (options.delim.join(["%s" % normal(float(options.mean), float(options.std)) for x in range(int(options.dim))]))
+        print (options.delim.join(["%s" % dist(float(options.mean), float(options.std)) for x in range(int(options.dim))]))
 
 if __name__ == "__main__":
     main()
