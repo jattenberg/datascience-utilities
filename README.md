@@ -45,3 +45,5 @@ Examples:
 `perl -e  'BEGIN{print "SHOES\tGLASSES\n"} for ($i = 0; $i < 100; $i ++) { print rand(), "\t", 50*rand(), "\n" } ' | plot_xy -O -H`
 
 `paste <(normal -m 5 -s 20 -n 10000) <(perl -e 'foreach (1..10000) { print rand(), "\n"}' ) | plot_hex`
+
+`paste <(normal -m 5 -s 20 -n 10000) <(perl -e 'foreach (1..10000) { print rand(), "\n"}' ) <(exponential -n 10000) <(poisson -n 10000 -l 1) | describe`

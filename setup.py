@@ -23,6 +23,8 @@ setup(name='datascience-utilities',
               "describe=datascience_utilities.describe:main",
               "ztest=datascience_utilities.ztest:main",
               "normal=datascience_utilities.normal:main",
+              "exponential=datascience_utilities.exponential:main",
+              "poisson=datascience_utilities.poisson:main",
               "reservoir_sample=datascience_utilities.reservoirSampling:main"
           ]
       }
