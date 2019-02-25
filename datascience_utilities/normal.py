@@ -24,7 +24,7 @@ THE SOFTWARE.
 """
 
 from optparse import OptionParser
-from numpy.random import normal, lognormal
+from numpy.random import normal, lognormal, seed
 
 
 def get_parser():
@@ -38,6 +38,8 @@ def get_parser():
                       help = "mean of the generating distribution")
     parser.add_option("-s", "--stddev", action = 'store', dest = 'std', default = 1,
                       help = "standard deviation of the generating distribution")
+    parser.add_option("-S", "--seed", action = 'store', dest = 'seed',
+                      help = "seed for random number generation")
     parser.add_option("-D", "--dim", action = 'store', dest = 'dim', default = 1,
                       help = "dimension- number of draws per line")
     parser.add_option("-d", "--delim", action = 'store', dest = 'delim', default = "\t",
@@ -52,6 +54,8 @@ def main():
 
     assert int(options.dim) > 0
 
+    seed(int(options.seed) if options.seed else None)
+    
     dist = lognormal if options.lognormal else normal
 
     for i in range(int(options.num)):

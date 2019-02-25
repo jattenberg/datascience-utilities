@@ -24,7 +24,7 @@ THE SOFTWARE.
 """
 
 from optparse import OptionParser
-from numpy.random import poisson
+from numpy.random import poisson, seed
 
 
 def get_parser():
@@ -36,6 +36,8 @@ def get_parser():
                       help = "number of draws to make")
     parser.add_option("-l", "--lambda", action = 'store', dest = 'expectation', default = 1.0,
                       help = "expectation parameter of the poisson distribution")
+    parser.add_option("-S", "--seed", action = 'store', dest = 'seed',
+                      help = "seed for random number generation")
     parser.add_option("-D", "--dim", action = 'store', dest = 'dim', default = 1,
                       help = "dimension- number of draws per line")
     parser.add_option("-d", "--delim", action = 'store', dest = 'delim', default = "\t",
@@ -47,6 +49,8 @@ def main():
     (options, args) = get_parser().parse_args()
 
     assert int(options.dim) > 0
+
+    seed(int(options.seed) if options.seed else None)
 
     for i in range(int(options.num)):
         print (options.delim.join(["%s" % poisson(float(options.expectation)) for x in range(int(options.dim))]))
