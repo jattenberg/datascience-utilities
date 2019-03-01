@@ -14,7 +14,8 @@ Building:
 =========
 
 Just run `./build.sh`! This builds the virtualenv and installs the library in that env.
-The script also outputs several aliases that you may want to put in your shell profile for convenience. 
+The script also outputs several aliases that you may want to put in your shell profile for convenience.
+The `build.sh` script also accepts an optional parameter "iterm" to facilitate inline plotting in iterm2
 
 
 Some Useful Tools:

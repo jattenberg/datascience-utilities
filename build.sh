@@ -1,10 +1,17 @@
 #!/bin/bash
 
 # assumes python 3.6, pip, virtualenv
+iterm=$1
 
 virtualenv venv
 source venv/bin/activate
-pip install -e . 
+
+if [ "$iterm" = "iterm" ]; then
+    pip install -e .[iterm]
+else
+    echo "building with iterm inline plotting"
+    pip install -e .
+fi
 
 printf "\n\n\n\n"
 echo "========================================================================"
@@ -12,6 +19,9 @@ echo "consider adding these to your profile!"
 echo "========================================================================"
 printf "\n\n"
 
+if [ "$iterm" = "iterm" ]; then
+    echo 'export MPLBACKEND="module://itermplot"'
+fi
 echo "alias plot_hex=`pwd`/venv/bin/plot_hex"
 echo "alias plot_xy=`pwd`/venv/bin/plot_xy"
 echo "alias plot_hist=`pwd`/venv/bin/plot_hist"

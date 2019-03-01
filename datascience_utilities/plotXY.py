@@ -25,7 +25,6 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 """
 import matplotlib
-matplotlib.use('TkAgg') 
 
 import sys
 import numpy as np

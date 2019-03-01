@@ -13,8 +13,11 @@ setup(name='datascience-utilities',
           'numpy',
           'matplotlib',
           'seaborn',
-          "statsmodels"
+          "statsmodels",
       ],
+      extras_require={
+          "iterm":["itermplot"]
+      },
       entry_points={
           'console_scripts': [
               "plot_hist=datascience_utilities.plotHist:main",
