@@ -22,7 +22,7 @@ Some Useful Tools:
 
 + `describe`: provides a wide variety of descriptive statistics to each column. Good for quick summary analysis.
 
-+ reservoir_sampling: samples a specified number of rows from input, works for numeric and non-numeric data
++ `reservoir_sampling`: samples a specified number of rows from input, works for numeric and non-numeric data
 
 + `shuffle_lines`: shuffles the input data (in memory)
 
