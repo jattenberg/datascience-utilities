@@ -33,6 +33,10 @@ Some Useful Tools:
 
 + `plot_hex`: Hex plots- 2D histograms on the crossproduct of input columns
 
++ `json_to_csv`: convert json data to csv with various options
+
++ `csv_to_json`: convert csv data to json with various options
+
 
 Examples:
 =========
@@ -48,3 +52,5 @@ Examples:
 `paste <(normal -m 5 -s 20 -n 10000) <(perl -e 'foreach (1..10000) { print rand(), "\n"}' ) | plot_hex`
 
 `paste <(normal -m 5 -s 20 -n 10000) <(perl -e 'foreach (1..10000) { print rand(), "\n"}' ) <(exponential -n 10000) <(poisson -n 10000 -l 1) | describe`
+
+`paste <(normal -m 5 -s 20 -n 10000) <(perl -e 'foreach (1..10000) { print rand(), "\n"}' ) | csv_to_json -L | json_to_csv -L -i`
