@@ -143,7 +143,7 @@ def main():
 
     input = open(options.filename, 'r') if options.filename else sys.stdin
 
-    out = open(options.out, 'r') if options.out else sys.stdout
+    out = open(options.out, 'w') if options.out else sys.stdout
 
     df = pd.read_csv(input, sep = options.delim,
                      header = 0 if options.header else None)
