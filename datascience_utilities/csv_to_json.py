@@ -85,7 +85,6 @@ def get_parser():
 
     return parser
 
-
 def main():
     (options, args) = get_parser().parse_args()
 
@@ -99,7 +98,6 @@ def main():
     df.to_json(output,
                orient=options.orient,
                lines=options.lines)
-    
 
 if __name__ == "__main__":
     main()

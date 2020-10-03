@@ -28,9 +28,9 @@ setup(name='datascience-utilities',
               "normal=datascience_utilities.normal:main",
               "exponential=datascience_utilities.exponential:main",
               "poisson=datascience_utilities.poisson:main",
-              "reservoir_sample=datascience_utilities.reservoirSampling:main"
-              "csv_to_json=datascience_utilities.csv_to_json:main"
-              "json_to_csv=datascience_utilities.json_to_csv:main"
+              "reservoir_sample=datascience_utilities.reservoirSampling:main",
+              "csv_to_json=datascience_utilities.csv_to_json:main",
+              "json_to_csv=datascience_utilities.json_to_csv:main",
           ]
       }
 )
