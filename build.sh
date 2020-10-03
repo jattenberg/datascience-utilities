@@ -3,6 +3,12 @@
 # assumes python 3.6, pip, virtualenv
 iterm=$1
 
+hash virtualenv
+if [ "$?" != "0" ];
+  then
+    pip install virtualenv;
+fi
+
 virtualenv venv
 source venv/bin/activate
 
