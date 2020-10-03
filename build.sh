@@ -3,20 +3,10 @@
 # assumes python 3.6, pip, virtualenv
 iterm=$1
 
-
-
-hash virtualenv
-if [ "$?" != "0" ]; then
-    pip install virtualenv;
-fi
-
 hash pipx
 if [ "$?" != "0" ]; then
   pip install --user pipx;
 fi
-
-virtualenv venv
-source venv/bin/activate
 
 if [ "$iterm" = "iterm" ]; then
     echo "building with iterm inline plotting"
