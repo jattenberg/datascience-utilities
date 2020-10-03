@@ -37,6 +37,8 @@ echo "alias normal=`pwd`/venv/bin/normal"
 echo "alias exponential=`pwd`/venv/bin/exponential"
 echo "alias poisson=`pwd`/venv/bin/poisson"
 echo "alias reservoir_sample=`pwd`/venv/bin/reservoir_sample"
+echo "alias csv_to_json=`pwd`/venv/bin/csv_to_json"
+echo "alias json_to_csv=`pwd`/venv/bin/json_to_csv"
 echo "alias histogram=\"bash `pwd`/scripts/histogram.sh\""
 echo "alias shuffle_lines=\"perl `pwd`/scripts/shuffleLines.pl\""
 
