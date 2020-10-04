@@ -6,6 +6,7 @@ setup(name='datascience-utilities',
       author="josh attenberg",
       author_email="jattenbe@stern.nyu.edu",
       url="https://github.com/jattenberg/datascience-utilities",
+      download_utl="https://github.com/jattenberg/datascience-utilities/archive/0.1.0.tar.gz",
       packages=find_packages(),
       install_requires=[
           'pandas',
