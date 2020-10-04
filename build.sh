@@ -5,15 +5,19 @@ iterm=$1
 
 hash pipx
 if [ "$?" != "0" ]; then
-  pip install --user pipx;
+  pip install pipx;
 fi
+
+pipx uninstall . 
 
 if [ "$iterm" = "iterm" ]; then
     echo "building with iterm inline plotting"
     pipx install .[iterm]
 else
-    pipx install -e .
+    pipx install .
 fi
+
+pipx ensurepath
 
 printf "\n\n\n\n"
 echo "========================================================================"
