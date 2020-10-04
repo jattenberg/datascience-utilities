@@ -1,6 +1,8 @@
 DATASCIENCE UTILITIES
 =====================
 
+[![Build Status](https://travis-ci.org/jattenberg/datascience-utilities.svg?branch=master)](https://travis-ci.org/jattenberg/datascience-utilities)
+
 A set of command line tools for data analysis, data mining and exploration. Most scripts are designed to work on columnar numeric data, for instance CSV data, with a configurable separator (defaulting to \t) and with an optional separator
 
 Requirements:

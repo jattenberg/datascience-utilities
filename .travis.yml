@@ -1,0 +1,13 @@
+sudo: required
+
+language: generic
+
+services:
+  - docker
+
+after_success:
+  - docker build -t downer/datascience-utilities .
+  # docker login to cli
+  - echo "$DOCKER_PW" | docker login -u "$DOCKER_ID" --password-stdin
+  # publish images to docker hub
+  - docker push downer/datascience-utilities
