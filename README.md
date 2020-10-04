@@ -12,15 +12,16 @@ A set of command line tools for data analysis, data mining and exploration. Most
 Requirements:
 =============
 - Python 3.6. Other versions of python my work, but this is what I've tested with
-- virtualenv
-- pip
+- pipx / pip
 
 
 Building:
 =========
 
-Just run `./build.sh`! This builds the virtualenv and installs the library in that env.
-The script also outputs several aliases that you may want to put in your shell profile for convenience.
+Just run `./build.sh`! This installs `pipx` if it's not installed using pip and uses `pipx`
+to build the library in a virtual env, putting that on your path. by default, this is at
+`~/.local/bin`, which may not be on your path, `pipx` tries to add it. 
+
 The `build.sh` script also accepts an optional parameter "iterm" to facilitate inline plotting in iterm2
 
 
