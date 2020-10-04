@@ -3,14 +3,19 @@
 # assumes python 3.6, pip, virtualenv
 iterm=$1
 
-hash pipx
-if [ "$?" != "0" ]; then
-  pip install pipx;
+if ! command -v pipx &> /dev/null 
+then
+    echo "pipx could not be found"
+    pip install pipx;
+else
+  pipx_path=$(which pipx);
+  echo "using pipx located at $pipx_path"
 fi
 
 pipx uninstall . 
 
-if [ "$iterm" = "iterm" ]; then
+if [ "$iterm" = "iterm" ];
+then
     echo "building with iterm inline plotting"
     pipx install .[iterm]
 else
