@@ -3,7 +3,7 @@ DATASCIENCE UTILITIES
 
 [![Travis CI w/ Logo](https://img.shields.io/travis/jattenberg/datascience-utilities/master.svg?logo=travis)](https://travis-ci.org/jattenberg/datascience-utilities)  
 [![MIT License](https://img.shields.io/apm/l/atomic-design-ui.svg?)](https://github.com/jattenberg/atomic-design-ui/blob/master/LICENSEs)
-[![HitCount](http://hits.dwyl.io/jattenberg/datascience-utilities.svg)](http://hits.dwyl.io/jattenberg/datascience-utilities)
+[![HitCount](http://hits.dwyl.com/jattenberg/datascience-utilities.svg)](http://hits.dwyl.com/jattenberg/datascience-utilities)
 [![PyPI version](https://badge.fury.io/py/datascience-utilities.svg)](https://badge.fury.io/py/datascience-utilities)
 
 
