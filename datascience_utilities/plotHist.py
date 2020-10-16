@@ -52,6 +52,9 @@ def get_parser():
     parser.add_option('-o', '--out', dest='out',
                       action='store', default=False,
                       help = "optional file path for saving the image")
+    parser.add_option('-i', '--ignore', dest='ignore',
+                      action='store',
+                      help = "ignore the specified colums. can be a column name or column index (from 0). specifiy multiple values separated by commas")
 
     return parser
 
@@ -64,6 +67,20 @@ def main():
 
     df = pd.read_csv(input, sep = options.delim,
                      header = 0 if options.header else None)
+
+    if options.ignore:
+        to_ignores = options.ignore.split(",")
+        for to_ignore in to_ignores:
+            if to_ignore in df.columns:
+                c = df[to_ignore]
+            elif to_ignore.isdigit() and int(to_ignore) < df.shape[1]:
+                c = df.iloc[:, int(to_ignore)]
+            else:
+                raise LookupError("Unknown column to ignore: %s" % to_ignore)
+
+            df = df.drop(c.name, axis=1)
+        print ("remaining columns: %s" % ", ".join(["'%s'" % x for x in df.columns.values]))
+
     (df.applymap(lambda x : log(x)) if options.log_scale else df).hist(bins=int(options.bins))
 
     try:
