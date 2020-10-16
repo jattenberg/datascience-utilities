@@ -80,6 +80,9 @@ def get_parser():
     parser.add_option('-x', '--xcol', dest='xcol',
                       action='store', default=False,
                       help = "use the specified column as the x-value in the generated plot. Can be a column name or column index (from 0)")
+    parser.add_option('-i', '--ignore', dest='ignore',
+                      action='store', default=False,
+                      help = "ignore teh specified colums. can be a column name or column index (from 0). specifiy multiple values separated by commas")
     parser.add_option('-o', '--out', dest='out',
                       action='store', default=False,
                       help = "optional file path for saving the image")
@@ -112,6 +115,21 @@ def main():
             xcolumn = df.iloc[:,int(options.xcol)]
         else:
             raise LookupError("Unknown column: %s" % options.xcol)
+
+    if options.ignore:
+        to_ignores = options.ignore.split(",")
+        for to_ignore in to_ignores:
+            if to_ignore in df.columns:
+                c = df[to_ignore]
+            elif to_ignore.isdigit() and int(to_ignore) < df.shape[1]:
+                c = df.iloc[:, int(to_ignore)]
+            else:
+                raise LookupError("Unknown column to ignore: %s" % to_ignore)
+
+            count = count - 1
+
+            df = df.drop(c.name, axis=1)
+        print ("remaining columns: %s" % ", ".join(["'%s'" % x for x in df.columns.values]))
 
     ycolumns = df.drop(xcolumn.name, axis = 1) if options.xcol else df
     ycolumns.index = xcolumn
