@@ -82,7 +82,7 @@ def get_parser():
                       help = "use the specified column as the x-value in the generated plot. Can be a column name or column index (from 0)")
     parser.add_option('-i', '--ignore', dest='ignore',
                       action='store', default=False,
-                      help = "ignore teh specified colums. can be a column name or column index (from 0). specifiy multiple values separated by commas")
+                      help = "ignore the specified colums. can be a column name or column index (from 0). specifiy multiple values separated by commas")
     parser.add_option('-o', '--out', dest='out',
                       action='store', default=False,
                       help = "optional file path for saving the image")
