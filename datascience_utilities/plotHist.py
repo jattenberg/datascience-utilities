@@ -31,6 +31,8 @@ import pandas as pd
 from optparse import OptionParser
 import seaborn as sns
 
+from .utils import select_columns
+
 #expects a list of pairs, x, #x
 
 def get_parser():
@@ -71,36 +73,7 @@ def main():
     df = pd.read_csv(input, sep = options.delim,
                      header = 0 if options.header else None)
 
-    if options.ignore:
-        tdf = df.copy()
-        to_ignores = options.ignore.split(",")
-        for to_ignore in to_ignores:
-            if to_ignore in df.columns:
-                c = df[to_ignore]
-            elif to_ignore.isdigit() and int(to_ignore) < df.shape[1]:
-                c = df.iloc[:, int(to_ignore)]
-            else:
-                raise LookupError("Unknown column to ignore: %s" % to_ignore)
-
-            tdf = tdf.drop(c.name, axis=1)
-        
-        df = tdf
-        print ("remaining columns: %s" % ", ".join(["'%s'" % x for x in df.columns.values]))
-
-    if options.columns:
-        columns = options.columns.split(",")
-        keepers = []
-        for column in columns:
-            if column in df.columns:
-                c = df[column]
-            elif column.isdigit() and int(column) < df.shape[1]:
-                c = df.iloc[:, int(column)]
-            else:
-                raise LookupError("unknown column to keep: %s" % column)
-
-            keepers.append(c)
-                
-        df = df[[c.name for c in keepers]]
+    df = select_columns(df, options.ignore, options.columns)
 
     (df.applymap(lambda x : log(x)) if options.log_scale else df).hist(bins=int(options.bins))
 
