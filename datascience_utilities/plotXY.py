@@ -35,6 +35,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 from statsmodels.nonparametric.smoothers_lowess import lowess
 
+from .utils import select_columns
 
 def get_parser():
     parser = OptionParser(usage ="""
@@ -119,38 +120,7 @@ def main():
         else:
             raise LookupError("Unknown column: %s" % options.xcol)
 
-    if options.ignore:
-        tdf = df.copy()
-        to_ignores = options.ignore.split(",")
-        for to_ignore in to_ignores:
-            if to_ignore in df.columns:
-                c = df[to_ignore]
-            elif to_ignore.isdigit() and int(to_ignore) < df.shape[1]:
-                c = df.iloc[:, int(to_ignore)]
-            else:
-                raise LookupError("Unknown column to ignore: %s" % to_ignore)
-
-            count = count - 1
-
-            tdf = tdf.drop(c.name, axis=1)
-
-        df = tdf
-        print ("remaining columns: %s" % ", ".join(["'%s'" % x for x in df.columns.values]))
-
-    if options.columns:
-        columns = options.columns.split(",")
-        keepers = [xcolumn]
-        for column in columns:
-            if column in df.columns:
-                c = df[column]
-            elif column.isdigit() and int(column) < df.shape[1]:
-                c = df.iloc[:, int(column)]
-            else:
-                raise LookupError("unknown column to keep: %s" % column)
-
-            keepers.append(c)
-                
-        df = df[[c.name for c in keepers]]
+    df = select_columns(df, options.ignore, options.columns, xcolumn)
 
     ycolumns = df.drop(xcolumn.name, axis = 1) if options.xcol else df
     ycolumns.index = xcolumn
