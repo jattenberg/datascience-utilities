@@ -55,6 +55,9 @@ def get_parser():
     parser.add_option('-i', '--ignore', dest='ignore',
                       action='store',
                       help = "ignore the specified colums. can be a column name or column index (from 0). specifiy multiple values separated by commas")
+    parser.add_option('-C', '--columns', dest='columns',
+                      action='store',
+                      help = "include _only_ these columns. can be a column name or column index (from 0). specifiy multiple values separated by commas")
 
     return parser
 
@@ -83,6 +86,21 @@ def main():
         
         df = tdf
         print ("remaining columns: %s" % ", ".join(["'%s'" % x for x in df.columns.values]))
+
+    if options.columns:
+        columns = options.columns.split(",")
+        keepers = []
+        for column in columns:
+            if column in df.columns:
+                c = df[column]
+            elif column.isdigit() and int(column) < df.shape[1]:
+                c = df.iloc[:, int(column)]
+            else:
+                raise LookupError("unknown column to keep: %s" % column)
+
+            keepers.append(c)
+                
+        df = df[[c.name for c in keepers]]
 
     (df.applymap(lambda x : log(x)) if options.log_scale else df).hist(bins=int(options.bins))
 
