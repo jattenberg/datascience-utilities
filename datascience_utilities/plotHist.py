@@ -69,6 +69,7 @@ def main():
                      header = 0 if options.header else None)
 
     if options.ignore:
+        tdf = df.copy()
         to_ignores = options.ignore.split(",")
         for to_ignore in to_ignores:
             if to_ignore in df.columns:
@@ -78,7 +79,9 @@ def main():
             else:
                 raise LookupError("Unknown column to ignore: %s" % to_ignore)
 
-            df = df.drop(c.name, axis=1)
+            tdf = tdf.drop(c.name, axis=1)
+        
+        df = tdf
         print ("remaining columns: %s" % ", ".join(["'%s'" % x for x in df.columns.values]))
 
     (df.applymap(lambda x : log(x)) if options.log_scale else df).hist(bins=int(options.bins))
