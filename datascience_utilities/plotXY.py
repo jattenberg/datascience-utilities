@@ -81,8 +81,11 @@ def get_parser():
                       action='store', default=False,
                       help = "use the specified column as the x-value in the generated plot. Can be a column name or column index (from 0)")
     parser.add_option('-i', '--ignore', dest='ignore',
-                      action='store', default=False,
+                      action='store',
                       help = "ignore the specified colums. can be a column name or column index (from 0). specifiy multiple values separated by commas")
+    parser.add_option('-C', '--columns', dest='columns',
+                      action='store',
+                      help = "include _only_ these columns. can be a column name or column index (from 0). specifiy multiple values separated by commas")
     parser.add_option('-o', '--out', dest='out',
                       action='store', default=False,
                       help = "optional file path for saving the image")
@@ -117,6 +120,7 @@ def main():
             raise LookupError("Unknown column: %s" % options.xcol)
 
     if options.ignore:
+        tdf = df.copy()
         to_ignores = options.ignore.split(",")
         for to_ignore in to_ignores:
             if to_ignore in df.columns:
@@ -128,8 +132,25 @@ def main():
 
             count = count - 1
 
-            df = df.drop(c.name, axis=1)
+            tdf = tdf.drop(c.name, axis=1)
+
+        df = tdf
         print ("remaining columns: %s" % ", ".join(["'%s'" % x for x in df.columns.values]))
+
+    if options.columns:
+        columns = options.columns.split(",")
+        keepers = [xcolumn]
+        for column in columns:
+            if column in df.columns:
+                c = df[column]
+            elif column.isdigit() and int(column) < df.shape[1]:
+                c = df.iloc[:, int(column)]
+            else:
+                raise LookupError("unknown column to keep: %s" % column)
+
+            keepers.append(c)
+                
+        df = df[[c.name for c in keepers]]
 
     ycolumns = df.drop(xcolumn.name, axis = 1) if options.xcol else df
     ycolumns.index = xcolumn
