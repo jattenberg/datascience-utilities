@@ -11,17 +11,16 @@ def select_columns(df, ignore, keep, xcolumn=None):
     should_keep = bool(keep)
     specified = ignore.split(",") if ignore else keep.split(",")
 
-    all_cols = df.columns
-
-    out_cols = [xcolumn] if xcolumn is not None and keep else []
-
-    for col in specified:
-        if col in all_cols:
-            out_cols.append(df[col])
-        elif col.isdigit() and int(col) < len(all_cols):
-            out_cols.append(df.iloc[:, int(col)])
+    def _find_col(col):
+        if col in df.columns:
+            return df[col]
+        elif col.isdigit() and int(col) < len(df.columns):
+            return df.iloc[:, int(col)]
         else:
             raise LookupError("unknown column: %s" % col)
+
+    out_cols = [_find_col(x) for x in specified]\
+        + ([xcolumn] if xcolumn is not None and keep else [])
 
     if keep:
         return df[[x.name for x in out_cols]]
