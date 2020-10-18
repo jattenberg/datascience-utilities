@@ -28,29 +28,72 @@ from numpy.random import normal, lognormal, seed
 
 
 def get_parser():
-    parser = OptionParser("""generates a number of draws from a gaussian distribution.
+    parser = OptionParser(
+        """generates a number of draws from a gaussian distribution.
     Observations are separated by new lines. if mean and stddev are lists, dim must match
     the number of entries in these lists
-    Usage: %prog [options]""")
+    Usage: %prog [options]"""
+    )
 
-    parser.add_option("-n", "--number", action = 'store', dest = 'num', default = 100,
-                      help = "number of draws to make")
-    parser.add_option("-m", "--mean", action = 'store', dest = 'mean', default = "0",
-                      help = "float or comma separated list of floats, 'center of the distribution'")
-    parser.add_option("-s", "--stddev", action = 'store', dest = 'std', default = "1",
-                      help = "float or comma separated list of floats, standard deviation of the generating distribution")
-    parser.add_option("-S", "--seed", action = 'store', dest = 'seed',
-                      help = "seed for random number generation")
-    parser.add_option("-D", "--dim", action = 'store', dest = 'dim', default = "1",
-                      help = "dimension- number of draws per line")
-    parser.add_option("-d", "--delim", action = 'store', dest = 'delim', default = "\t",
-                      help = "delimiter to separate columns in multidimensional output")
-    parser.add_option("-L", "--lognormal", action = 'store_true', dest = 'lognormal',
-                      help = "sample from the log-normal distribution instead of the normal distribution")
+    parser.add_option(
+        "-n",
+        "--number",
+        action="store",
+        dest="num",
+        default=100,
+        help="number of draws to make",
+    )
+    parser.add_option(
+        "-m",
+        "--mean",
+        action="store",
+        dest="mean",
+        default="0",
+        help="float or comma separated list of floats, 'center of the distribution'",
+    )
+    parser.add_option(
+        "-s",
+        "--stddev",
+        action="store",
+        dest="std",
+        default="1",
+        help="float or comma separated list of floats, standard deviation of the generating distribution",
+    )
+    parser.add_option(
+        "-S",
+        "--seed",
+        action="store",
+        dest="seed",
+        help="seed for random number generation",
+    )
+    parser.add_option(
+        "-D",
+        "--dim",
+        action="store",
+        dest="dim",
+        default="1",
+        help="dimension- number of draws per line",
+    )
+    parser.add_option(
+        "-d",
+        "--delim",
+        action="store",
+        dest="delim",
+        default="\t",
+        help="delimiter to separate columns in multidimensional output",
+    )
+    parser.add_option(
+        "-L",
+        "--lognormal",
+        action="store_true",
+        dest="lognormal",
+        help="sample from the log-normal distribution instead of the normal distribution",
+    )
     return parser
 
+
 def main():
-    
+
     (options, args) = get_parser().parse_args()
 
     assert int(options.dim) > 0
@@ -58,12 +101,21 @@ def main():
     seed(int(options.seed) if options.seed else None)
 
     dist = lognormal if options.lognormal else normal
-    mean = [float(m) for m in options.mean.split(",")] if "," in options.mean else float(options.mean)
-    std = [float(s) for s in options.std.split(",")] if "," in options.std else float(options.std)
+    mean = (
+        [float(m) for m in options.mean.split(",")]
+        if "," in options.mean
+        else float(options.mean)
+    )
+    std = (
+        [float(s) for s in options.std.split(",")]
+        if "," in options.std
+        else float(options.std)
+    )
     dim = int(options.dim)
-    
+
     for i in range(int(options.num)):
-        print (options.delim.join(["%s" % x for x in dist(mean, std, dim)]))
+        print(options.delim.join(["%s" % x for x in dist(mean, std, dim)]))
+
 
 if __name__ == "__main__":
     main()

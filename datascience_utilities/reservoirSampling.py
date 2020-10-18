@@ -26,41 +26,60 @@ from optparse import OptionParser
 
 
 def get_parser():
-    parser = OptionParser(usage="""performs reservoir sampling on input data to reduce the amount of
+    parser = OptionParser(
+        usage="""performs reservoir sampling on input data to reduce the amount of
     input to reduce the amound of data to be processed
-    Usage %prog [options]""")
+    Usage %prog [options]"""
+    )
 
-    parser.add_option('-f', '--file',
-                      action = 'store', dest = 'filename', default=False,
-                      help="[optional] use a specified file instead of reading from stdin")
-    parser.add_option('-n', '--number',
-                      action='store', dest='n', default=False,
-                      help="the number of input lines to keep")
-    parser.add_option('-o', '--out',
-                      action = 'store', dest = 'out', default=False,
-                      help="[optional] write to a specified file instead of stdout")
+    parser.add_option(
+        "-f",
+        "--file",
+        action="store",
+        dest="filename",
+        default=False,
+        help="[optional] use a specified file instead of reading from stdin",
+    )
+    parser.add_option(
+        "-n",
+        "--number",
+        action="store",
+        dest="n",
+        default=False,
+        help="the number of input lines to keep",
+    )
+    parser.add_option(
+        "-o",
+        "--out",
+        action="store",
+        dest="out",
+        default=False,
+        help="[optional] write to a specified file instead of stdout",
+    )
     return parser
+
 
 def main():
     (options, args) = get_parser().parse_args()
 
     N = int(options.n) if options.n else int(args[0]) if len(args) >= 1 else 100
-    input = open(options.filename, 'r') if options.filename else sys.stdin 
+    input = open(options.filename, "r") if options.filename else sys.stdin
 
-    out = open(options.out, 'r') if options.out else sys.stdout
-    sample = [];
+    out = open(options.out, "r") if options.out else sys.stdout
+    sample = []
 
     for i, line in enumerate(input):
         if i < N:
             sample.append(line)
-        elif i >= N and random.random() < N/float(i + 1):
+        elif i >= N and random.random() < N / float(i + 1):
             replace = random.randint(0, len(sample) - 1)
             sample[replace] = line
- 
+
     for line in sample:
         out.write(line)
     out.flush()
     out.close()
+
 
 if __name__ == "__main__":
     main()

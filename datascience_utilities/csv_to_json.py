@@ -26,29 +26,35 @@ import pandas as pd
 
 from optparse import OptionParser
 
+
 def get_parser():
     parser = OptionParser(usage="""consume csv data and emit it back as a json""")
 
-    parser.add_option('-f',
-                      '--file',
-                      action='store',
-                      dest='filename',
-                      default=False,
-                      help="[optional] use the specified file instead of reading from stdin")
-    
-    parser.add_option("-o",
-                      "--out",
-                      action="store",
-                      dest="out",
-                      default=False,
-                      help="[optional] write to the specified file instead of stdout")
+    parser.add_option(
+        "-f",
+        "--file",
+        action="store",
+        dest="filename",
+        default=False,
+        help="[optional] use the specified file instead of reading from stdin",
+    )
 
-    parser.add_option("-O",
-                      "--orient",
-                      action="store",
-                      dest="orient",
-                      default="records",
-                      help="""emitted JSON string format.\n
+    parser.add_option(
+        "-o",
+        "--out",
+        action="store",
+        dest="out",
+        default=False,
+        help="[optional] write to the specified file instead of stdout",
+    )
+
+    parser.add_option(
+        "-O",
+        "--orient",
+        action="store",
+        dest="orient",
+        default="records",
+        help="""emitted JSON string format.\n
                       default is `records`.
                       The set of possible orients is:\n
 
@@ -61,43 +67,47 @@ def get_parser():
     'columns' : dict like {column -> {index -> value}}\n
 
     'values' : just the values array
-"""
+""",
     )
 
-    parser.add_option("-d",
-                      "--delim",
-                      action="store",
-                      dest="delim",
-                      default="\t",
-                      help="delimiter seperating columns in input") 
+    parser.add_option(
+        "-d",
+        "--delim",
+        action="store",
+        dest="delim",
+        default="\t",
+        help="delimiter seperating columns in input",
+    )
 
-    parser.add_option("-H",
-                      "--header",
-                      action="store_true",
-                      dest="header",
-                      help="treat the first row as a column header")
+    parser.add_option(
+        "-H",
+        "--header",
+        action="store_true",
+        dest="header",
+        help="treat the first row as a column header",
+    )
 
-    parser.add_option("-L",
-                      "--lines",
-                      action="store_true",
-                      dest="lines",
-                      help="emit line-delimited json")
+    parser.add_option(
+        "-L",
+        "--lines",
+        action="store_true",
+        dest="lines",
+        help="emit line-delimited json",
+    )
 
     return parser
+
 
 def main():
     (options, args) = get_parser().parse_args()
 
-    input = open(options.filename, 'r') if options.filename else sys.stdin
-    output = open(options.out, 'w') if options.out else sys.stdout
+    input = open(options.filename, "r") if options.filename else sys.stdin
+    output = open(options.out, "w") if options.out else sys.stdout
 
-    df = pd.read_csv(input,
-                     sep=options.delim,
-                     header=0 if options.header else None)
+    df = pd.read_csv(input, sep=options.delim, header=0 if options.header else None)
 
-    df.to_json(output,
-               orient=options.orient,
-               lines=options.lines)
+    df.to_json(output, orient=options.orient, lines=options.lines)
+
 
 if __name__ == "__main__":
     main()

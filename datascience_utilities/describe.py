@@ -31,26 +31,28 @@ from math import log
 
 from .utils import select_columns
 
+
 def get_nonnumeric(column, np_values):
 
-    data = np_values.describe();
-    output = [ present("Column", column) ]
+    data = np_values.describe()
+    output = [present("Column", column)]
     for id in data.index:
         output.append(present(id.capitalize(), data[id]))
     return output
+
 
 def get_data(column, np_values, alpha):
 
     mvs = bayes_mvs(np_values, alpha)
 
-    #report these metrics
+    # report these metrics
     output = [
         present("Column", column),
         present("Length", len(np_values)),
         present("Unique", len(np.unique(np_values))),
         present("Min", np_values.min()),
         present("Max", np_values.max()),
-        present("Mid-Range", (np_values.max() - np_values.min())/2),
+        present("Mid-Range", (np_values.max() - np_values.min()) / 2),
         present("Range", np_values.max() - np_values.min()),
         present("Mean", np_values.mean()),
         present("Mean-%s-CI" % alpha, tupleToString(mvs[0][1])),
@@ -67,39 +69,49 @@ def get_data(column, np_values, alpha):
         present("Skewness", stats.skew(np_values)),
         present("Kurtosis", stats.kurtosis(np_values)),
         present("StdErr", sem(np_values)),
-        present("Normal-P-value", normaltest(np_values)[1])
-        ]
+        present("Normal-P-value", normaltest(np_values)[1]),
+    ]
     return output
 
-#this prints a bit nicer than tuples standard toString
+
+# this prints a bit nicer than tuples standard toString
 def tupleToString(tuple):
     return "(%s, %s)" % tuple
+
 
 def present(key, value):
     return key + " : " + str(value)
 
+
 def trimean(values):
-    return (stats.scoreatpercentile(values, 25) + 2.0*stats.scoreatpercentile(values, 50) + stats.scoreatpercentile(values, 75))/4.0
+    return (
+        stats.scoreatpercentile(values, 25)
+        + 2.0 * stats.scoreatpercentile(values, 50)
+        + stats.scoreatpercentile(values, 75)
+    ) / 4.0
+
 
 def midhinge(values):
-    return (stats.scoreatpercentile(values, 25) + stats.scoreatpercentile(values, 75))/2.0
+    return (
+        stats.scoreatpercentile(values, 25) + stats.scoreatpercentile(values, 75)
+    ) / 2.0
 
 
 def relations(df, num_columns, output):
-    output.append( "\nCovariances:" )
-    output.append( str(df[num_columns].cov()) )
+    output.append("\nCovariances:")
+    output.append(str(df[num_columns].cov()))
 
-    output.append( "\nCorrelations:" )
-    output.append( str(df[num_columns].corr()) )
+    output.append("\nCorrelations:")
+    output.append(str(df[num_columns].corr()))
 
 
 def gather_descriptions(df, description, options):
 
-    num_columns = []    
+    num_columns = []
     for column in df.columns:
-        #only consider numeric columns
+        # only consider numeric columns
 
-        if df[column].dtype.kind == 'i' or df[column].dtype.kind == 'f':
+        if df[column].dtype.kind == "i" or df[column].dtype.kind == "f":
 
             output = get_data(column, df[column], float(options.alpha))
             num_columns.append(column)
@@ -111,50 +123,91 @@ def gather_descriptions(df, description, options):
     if not options.simple and df.shape[1] > 1 and len(num_columns) > 1:
         relations(df, num_columns, description)
 
+
 def get_parser():
-    parser = OptionParser(usage="""presents a range of standard descriptive statistics
+    parser = OptionParser(
+        usage="""presents a range of standard descriptive statistics
     on columns of numerical data
     perl -e 'for($i = 0; $i < 20; $i++){print rand(), "\\t", rand(), "\\t", rand(), "\\n"}' | python describe.py
     Usage %prog [options]                                                                                
-    """)
-    
-    parser.add_option('-f', '--file',
-                      action = 'store', dest = 'filename', default=False,
-                      help="[optional] use a specified file instead of reading from stdin")
-    parser.add_option('-o', '--out',
-                      action = 'store', dest = 'out', default=False,
-                      help="[optional] write to a specified file instead of stdout")
-    parser.add_option('-H', '--header', 
-                      action = 'store_true', dest = 'header', default = None,
-                      help="treat the first row as column headers")
-    parser.add_option('-d', '--delim',
-                      action='store', dest='delim', default="\t",
-                      help="delimiter seperating columns in input") 
-    parser.add_option('-a', '--alpha',
-                      action='store', dest='alpha', default=0.9,
-                      help="confidence value used in interval estimation") 
-    parser.add_option('-s', '--simple', 
-                      action = 'store_true', dest = 'simple', default = False,
-                      help="abbreviated, simplified output")
-    parser.add_option('-i', '--ignore', dest='ignore',
-                      action='store',
-                      help = "ignore the specified colums. can be a column name or column index (from 0). specifiy multiple values separated by commas")
-    parser.add_option('-C', '--columns', dest='columns',
-                      action='store',
-                      help = "include _only_ these columns. can be a column name or column index (from 0). specifiy multiple values separated by commas")
+    """
+    )
+
+    parser.add_option(
+        "-f",
+        "--file",
+        action="store",
+        dest="filename",
+        default=False,
+        help="[optional] use a specified file instead of reading from stdin",
+    )
+    parser.add_option(
+        "-o",
+        "--out",
+        action="store",
+        dest="out",
+        default=False,
+        help="[optional] write to a specified file instead of stdout",
+    )
+    parser.add_option(
+        "-H",
+        "--header",
+        action="store_true",
+        dest="header",
+        default=None,
+        help="treat the first row as column headers",
+    )
+    parser.add_option(
+        "-d",
+        "--delim",
+        action="store",
+        dest="delim",
+        default="\t",
+        help="delimiter seperating columns in input",
+    )
+    parser.add_option(
+        "-a",
+        "--alpha",
+        action="store",
+        dest="alpha",
+        default=0.9,
+        help="confidence value used in interval estimation",
+    )
+    parser.add_option(
+        "-s",
+        "--simple",
+        action="store_true",
+        dest="simple",
+        default=False,
+        help="abbreviated, simplified output",
+    )
+    parser.add_option(
+        "-i",
+        "--ignore",
+        dest="ignore",
+        action="store",
+        help="ignore the specified colums. can be a column name or column index (from 0). specifiy multiple values separated by commas",
+    )
+    parser.add_option(
+        "-C",
+        "--columns",
+        dest="columns",
+        action="store",
+        help="include _only_ these columns. can be a column name or column index (from 0). specifiy multiple values separated by commas",
+    )
 
     return parser
+
 
 def main():
 
     (options, args) = get_parser().parse_args()
 
-    input = open(options.filename, 'r') if options.filename else sys.stdin
+    input = open(options.filename, "r") if options.filename else sys.stdin
 
-    out = open(options.out, 'w') if options.out else sys.stdout
+    out = open(options.out, "w") if options.out else sys.stdout
 
-    df = pd.read_csv(input, sep = options.delim,
-                     header = 0 if options.header else None)
+    df = pd.read_csv(input, sep=options.delim, header=0 if options.header else None)
 
     df = select_columns(df, options.ignore, options.columns)
 
@@ -162,11 +215,11 @@ def main():
 
     gather_descriptions(df, description, options)
 
-    out.write( "\n\n".join(description) + "\n")
+    out.write("\n\n".join(description) + "\n")
     out.flush()
     out.close()
     input.close()
 
-if __name__ == '__main__':
-    main()
 
+if __name__ == "__main__":
+    main()

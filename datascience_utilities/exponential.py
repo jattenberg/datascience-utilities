@@ -28,32 +28,72 @@ from numpy.random import exponential, seed
 
 
 def get_parser():
-    parser = OptionParser("""generates a number of draws from an exponential distribution.
+    parser = OptionParser(
+        """generates a number of draws from an exponential distribution.
     Observations are separated by new lines.
-    Usage: %prog [options]""")
+    Usage: %prog [options]"""
+    )
 
-    parser.add_option("-n", "--number", action = 'store', dest = 'num', default = 100,
-                      help = "number of draws to make")
-    parser.add_option("-b", "--scale", action = 'store', dest = 'scale', default = 1.0,
-                      help = "scale parameter of the exponential distribution")
-    parser.add_option("-S", "--seed", action = 'store', dest = 'seed',
-                      help = "seed for random number generation")
-    parser.add_option("-D", "--dim", action = 'store', dest = 'dim', default = 1,
-                      help = "dimension- number of draws per line")
-    parser.add_option("-d", "--delim", action = 'store', dest = 'delim', default = "\t",
-                      help = "delimiter to separate columns in multidimensional output")
+    parser.add_option(
+        "-n",
+        "--number",
+        action="store",
+        dest="num",
+        default=100,
+        help="number of draws to make",
+    )
+    parser.add_option(
+        "-b",
+        "--scale",
+        action="store",
+        dest="scale",
+        default=1.0,
+        help="scale parameter of the exponential distribution",
+    )
+    parser.add_option(
+        "-S",
+        "--seed",
+        action="store",
+        dest="seed",
+        help="seed for random number generation",
+    )
+    parser.add_option(
+        "-D",
+        "--dim",
+        action="store",
+        dest="dim",
+        default=1,
+        help="dimension- number of draws per line",
+    )
+    parser.add_option(
+        "-d",
+        "--delim",
+        action="store",
+        dest="delim",
+        default="\t",
+        help="delimiter to separate columns in multidimensional output",
+    )
     return parser
 
+
 def main():
-    
+
     (options, args) = get_parser().parse_args()
 
     assert int(options.dim) > 0
 
     seed(int(options.seed) if options.seed else None)
-    
+
     for i in range(int(options.num)):
-        print (options.delim.join(["%s" % exponential(float(options.scale)) for x in range(int(options.dim))]))
+        print(
+            options.delim.join(
+                [
+                    "%s" % exponential(float(options.scale))
+                    for x in range(int(options.dim))
+                ]
+            )
+        )
+
 
 if __name__ == "__main__":
     main()
