@@ -97,17 +97,18 @@ def midhinge(values):
     ) / 2.0
 
 
-def relations(df, num_columns, output):
-    output.append("\nCovariances:")
-    output.append(str(df[num_columns].cov()))
+def relations(df, num_columns):
+    return ["\nCovariances:",
+            str(df[num_columns].cov()),
+            "\nCorrelations:",
+            str(df[num_columns].corr())]
 
-    output.append("\nCorrelations:")
-    output.append(str(df[num_columns].corr()))
 
-
-def gather_descriptions(df, description, options):
+def gather_descriptions(df, options):
 
     num_columns = []
+    description = []
+
     for column in df.columns:
         # only consider numeric columns
 
@@ -121,8 +122,9 @@ def gather_descriptions(df, description, options):
             description.append("\n".join(output))
 
     if not options.simple and df.shape[1] > 1 and len(num_columns) > 1:
-        relations(df, num_columns, description)
+        description.append(relations(df, num_columns))
 
+    return description
 
 def get_parser():
     parser = OptionParser(
@@ -211,9 +213,7 @@ def main():
 
     df = select_columns(df, options.ignore, options.columns)
 
-    description = []
-
-    gather_descriptions(df, description, options)
+    description = gather_descriptions(df, options)
 
     out.write("\n\n".join(description) + "\n")
     out.flush()
