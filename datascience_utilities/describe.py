@@ -41,8 +41,9 @@ def get_nonnumeric(column, np_values):
     return output
 
 
-def get_data(column, np_values, alpha):
+def get_data(column, np_values, options):
 
+    alpha = float(options.alpha)
     mvs = bayes_mvs(np_values, alpha)
 
     # report these metrics
@@ -98,33 +99,32 @@ def midhinge(values):
 
 
 def relations(df, num_columns):
-    return ["\nCovariances:",
-            str(df[num_columns].cov()),
-            "\nCorrelations:",
-            str(df[num_columns].corr())]
+    return [
+        "\nCovariances:",
+        str(df[num_columns].cov()),
+        "\nCorrelations:",
+        str(df[num_columns].corr()),
+    ]
 
 
 def gather_descriptions(df, options):
+    def _is_numeric(col):
+        return df[col].dtype.kind == "i" or df[col].dtype.kind == "f"
 
-    num_columns = []
-    description = []
-
-    for column in df.columns:
-        # only consider numeric columns
-
-        if df[column].dtype.kind == "i" or df[column].dtype.kind == "f":
-
-            output = get_data(column, df[column], float(options.alpha))
-            num_columns.append(column)
-            description.append("\n".join(output))
+    def _describe_column(col):
+        if _is_numeric(col):
+            return get_data(col, df[col], options)
         else:
-            output = get_nonnumeric(column, df[column])
-            description.append("\n".join(output))
+            return get_nonnumeric(col, df[col])
+
+    description = ["\n".join(_describe_column(c)) for c in df.columns]
+    num_columns = list(filter(_is_numeric, df.columns))
 
     if not options.simple and df.shape[1] > 1 and len(num_columns) > 1:
-        description.append(relations(df, num_columns))
+        return description + relations(df, num_columns)
+    else:
+        return description
 
-    return description
 
 def get_parser():
     parser = OptionParser(
