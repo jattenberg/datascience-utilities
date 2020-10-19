@@ -9,12 +9,13 @@ setup(name='datascience-utilities',
       download_utl="https://github.com/jattenberg/datascience-utilities/archive/0.1.1.tar.gz",
       packages=find_packages(),
       install_requires=[
-          'pandas',
+          'pandas==1.1.2',
           'scipy',
           'numpy',
           'matplotlib',
           'seaborn',
           "statsmodels",
+          "modin[ray]"
       ],
       extras_require={
           "iterm":["itermplot"]

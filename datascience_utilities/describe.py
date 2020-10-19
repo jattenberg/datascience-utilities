@@ -20,17 +20,18 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 """
+import os
 
+os.environ["MODIN_ENGINE"] = "ray"
 
 from scipy.stats import stats, normaltest, sem, bayes_mvs
 import sys
 from optparse import OptionParser
 import numpy as np
-import pandas as pd
+import modin.pandas as pd
 from math import log
 
 from .utils import select_columns
-
 
 def get_nonnumeric(column, np_values):
 
