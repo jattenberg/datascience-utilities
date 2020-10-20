@@ -23,12 +23,14 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 """
-import matplotlib
+import os
+
+os.environ["MODIN_ENGINE"] = "ray"
 
 import sys
 import numpy as np
 from math import log
-import pandas as pd
+import modin.pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 from statsmodels.nonparametric.smoothers_lowess import lowess

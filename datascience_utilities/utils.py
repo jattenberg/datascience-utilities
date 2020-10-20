@@ -1,4 +1,8 @@
-import pandas as pd
+import os
+
+os.environ["MODIN_ENGINE"] = "ray"
+
+import modin.pandas as pd
 from optparse import OptionParser
 
 
