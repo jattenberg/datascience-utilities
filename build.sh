@@ -1,5 +1,6 @@
 #!/bin/bash
 
+set -e
 # assumes python 3.6, pip, virtualenv
 iterm=$1
 
@@ -12,6 +13,8 @@ else
   echo "using pipx located at $pipx_path"
 fi
 
+
+pipx ensurepath
 pipx uninstall . 
 
 if [ "$iterm" = "iterm" ];
@@ -22,7 +25,6 @@ else
     pipx install .
 fi
 
-pipx ensurepath
 
 printf "\n\n\n\n"
 echo "========================================================================"
