@@ -29,6 +29,7 @@ import pandas as pd
 from optparse import OptionParser
 from matplotlib.pyplot import *
 import seaborn as sns
+import sixelplot
 
 
 def get_parser():
@@ -142,7 +143,7 @@ def main():
     if options.out:
         savefig(options.out)
     else:
-        show()
+        sixelplot.show()
 
 
 if __name__ == "__main__":

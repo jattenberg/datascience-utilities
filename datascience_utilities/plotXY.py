@@ -31,6 +31,7 @@ from math import log
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
+import sixelplot
 from statsmodels.nonparametric.smoothers_lowess import lowess
 
 from .utils import select_columns, option_parser
@@ -218,7 +219,7 @@ def main():
     if options.out:
         plt.savefig(options.out)
     else:
-        plt.show()
+        sixelplot.show()
 
 
 if __name__ == "__main__":

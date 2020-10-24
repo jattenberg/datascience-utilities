@@ -30,6 +30,7 @@ from math import log
 import pandas as pd
 from optparse import OptionParser
 import seaborn as sns
+import sixelplot
 
 from .utils import select_columns
 
@@ -103,7 +104,7 @@ def main():
     if options.out:
         plt.savefig(options.out)
     else:
-        plt.show()
+        sixelplot.show()
 
 
 if __name__ == "__main__":

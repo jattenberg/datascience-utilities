@@ -15,6 +15,7 @@ setup(name='datascience-utilities',
           'matplotlib',
           'seaborn',
           "statsmodels",
+          "sixelplot"
       ],
       extras_require={
           "iterm":["itermplot"]
