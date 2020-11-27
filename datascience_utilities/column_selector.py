@@ -29,7 +29,9 @@ from .utils import selector_parser, select_columns
 
 
 def get_parser():
-    parser = selector_parser("selects or ignores the supplied fields. Supports indices or column names if a header is supplied. similar to the linux command `cut`")
+    parser = selector_parser(
+        "selects or ignores the supplied fields. Supports indices or column names if a header is supplied. similar to the linux command `cut`"
+    )
 
     parser.add_option(
         "-I",
@@ -38,7 +40,7 @@ def get_parser():
         dest="index",
         help="add a column <index> with the row number",
     )
-    
+
     return parser
 
 
@@ -53,11 +55,13 @@ def main():
 
     df = select_columns(df, options.ignore, options.columns)
 
-    df.to_csv(out,
-              sep=options.delim,
-              index=options.index,
-              index_label="index" if options.index else False,
+    df.to_csv(
+        out,
+        sep=options.delim,
+        index=options.index,
+        index_label="index" if options.index else False,
     )
+
 
 if __name__ == "__main__":
     main()
