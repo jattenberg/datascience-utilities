@@ -44,6 +44,15 @@ Some Useful Tools:
 
 + `csv_to_json`: convert csv data to json with various options
 
++ `ztest`: perform the z-test
+
++ `normal`: draw from a normal distribution
+
++ `exponential`: draw from an exponential distribution
+
++ `poisson`: draw from a poisson distribution
+
++ `column_selector`: slightly more powerful version of cut
 
 Examples:
 =========
@@ -61,3 +70,5 @@ Examples:
 `paste <(normal -m 5 -s 20 -n 10000) <(perl -e 'foreach (1..10000) { print rand(), "\n"}' ) <(exponential -n 10000) <(poisson -n 10000 -l 1) | describe`
 
 `paste <(normal -m 5 -s 20 -n 10000) <(perl -e 'foreach (1..10000) { print rand(), "\n"}' ) | csv_to_json -L | json_to_csv -L -i`
+
+`paste <(poisson -n 10000) <(normal -m 5 -s 20 -n 10000) <(perl -e 'foreach (1..10000) { print rand(), "\n"}' ) | csv_to_json -L | json_to_csv -L -i | column_selector -C 0,1 -H`

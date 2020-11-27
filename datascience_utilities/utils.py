@@ -3,7 +3,7 @@ from optparse import OptionParser
 
 
 def option_parser(usage):
-    parser = OptionsParser(usage=usage)
+    parser = OptionParser(usage=usage)
 
     parser.add_option(
         "-f",
@@ -37,6 +37,27 @@ def option_parser(usage):
         action="store",
         default=False,
         help="[optional] file path for saving output",
+    )
+
+    return parser
+
+
+def selector_parser(usage):
+    parser = option_parser(usage)
+
+    parser.add_option(
+        "-i",
+        "--ignore",
+        dest="ignore",
+        action="store",
+        help="ignore the specified colums. can be a column name or column index (from 0). specifiy multiple values separated by commas",
+    )
+    parser.add_option(
+        "-C",
+        "--columns",
+        dest="columns",
+        action="store",
+        help="include _only_ these columns. can be a column name or column index (from 0). specifiy multiple values separated by commas",
     )
 
     return parser
