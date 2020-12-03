@@ -24,29 +24,10 @@ import sys
 
 import pandas as pd
 
-from optparse import OptionParser
-
+from .utils import option_parser
 
 def get_parser():
-    parser = OptionParser(usage="""consume json data and emit it back as a csv""")
-
-    parser.add_option(
-        "-f",
-        "--file",
-        action="store",
-        dest="filename",
-        default=False,
-        help="[optional] use the specified file instead of reading from stdin",
-    )
-
-    parser.add_option(
-        "-o",
-        "--out",
-        action="store",
-        dest="out",
-        default=False,
-        help="[optional] write to the specified file instead of stdout",
-    )
+    parser = option_parser("""consume json data and emit it back as a csv""")
 
     parser.add_option(
         "-O",
@@ -71,15 +52,6 @@ def get_parser():
     )
 
     parser.add_option(
-        "-d",
-        "--delim",
-        action="store",
-        dest="delim",
-        default="\t",
-        help="delimiter seperating columns in output",
-    )
-
-    parser.add_option(
         "-i",
         "--index",
         action="store_true",
@@ -95,6 +67,14 @@ def get_parser():
         help="read line-delimited json",
     )
 
+    parser.add_option(
+        "-C",
+        "--columns",
+        action="store_true",
+        dest="columns",
+        help="print the column names and exit"
+    )
+
     return parser
 
 
@@ -106,6 +86,10 @@ def main():
 
     df = pd.read_json(input, orient=options.orient, lines=options.lines)
 
+    if options.columns:
+        output.write(options.delim.join(df.columns.values))
+        return
+    
     df.to_csv(
         output,
         sep=options.delim,
