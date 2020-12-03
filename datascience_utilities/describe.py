@@ -53,6 +53,7 @@ def get_data(column, np_values, options):
         present("Unique", len(np.unique(np_values))),
         present("Min", np_values.min()),
         present("Max", np_values.max()),
+        present("Sum", np_values.sum()),
         present("Mid-Range", (np_values.max() - np_values.min()) / 2),
         present("Range", np_values.max() - np_values.min()),
         present("Mean", np_values.mean()),
