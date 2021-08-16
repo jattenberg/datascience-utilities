@@ -72,3 +72,5 @@ Examples:
 `paste <(normal -m 5 -s 20 -n 10000) <(perl -e 'foreach (1..10000) { print rand(), "\n"}' ) | csv_to_json -L | json_to_csv -L -i`
 
 `paste <(poisson -n 10000) <(normal -m 5 -s 20 -n 10000) <(perl -e 'foreach (1..10000) { print rand(), "\n"}' ) | csv_to_json -L | json_to_csv -L -i | column_selector -C 0,1 -H`
+
+`perl -le 'foreach (1..50000){ $r = rand(); $x = (-2.0*log(($r < 0.5) ? $r : 1 - $r))**0.5;  $o = $x - ((0.010328*$x + 0.802853)*$x + 2.515517)/(((0.001308*$x + 0.189269)*$x + 1.432788)*$x + 1.0); print (($r < 0.5) ? $o : -$o)}' | plot_hist`
