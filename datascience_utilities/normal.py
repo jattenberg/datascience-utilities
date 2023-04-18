@@ -33,7 +33,7 @@ def get_parser():
         """generates a number of draws from a gaussian distribution.
     Observations are separated by new lines. if mean and stddev are lists, dim must match
     the number of entries in these lists
-    Usage: %prog [options]""" # noqa
+    Usage: %prog [options]"""  # noqa
     )
 
     parser.add_option(
@@ -58,7 +58,7 @@ def get_parser():
         action="store",
         dest="std",
         default="1",
-        help="float or comma separated list of floats, standard deviation of the generating distribution", # noqa
+        help="float or comma separated list of floats, standard deviation of the generating distribution",  # noqa
     )
     parser.add_option(
         "-S",
@@ -88,7 +88,7 @@ def get_parser():
         "--lognormal",
         action="store_true",
         dest="lognormal",
-        help="sample from the log-normal distribution instead of the normal distribution", # noqa
+        help="sample from the log-normal distribution instead of the normal distribution",  # noqa
     )
     return parser
 

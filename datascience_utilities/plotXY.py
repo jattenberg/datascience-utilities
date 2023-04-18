@@ -88,7 +88,7 @@ def get_parser():
         action="store_true",
         dest="subplots",
         default=False,
-        help="use several subplots to represent data rather than multiple lines overlapped", # noqa
+        help="use several subplots to represent data rather than multiple lines overlapped",  # noqa
     )
     parser.add_option(
         "-m",

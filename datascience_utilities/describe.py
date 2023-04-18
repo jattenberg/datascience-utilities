@@ -133,7 +133,7 @@ def get_parser():
     on columns of numerical data
     perl -e 'for($i = 0; $i < 20; $i++){print rand(), "\\t", rand(), "\\t", rand(), "\\n"}' | python describe.py
     Usage %prog [options]
-    """ # noqa
+    """  # noqa
     )
 
     parser.add_option(
@@ -190,7 +190,7 @@ def get_parser():
         dest="ignore",
         action="store",
         help="""ignore the specified colums. can be a column name or column index (from 0).
-specifiy multiple values separated by commas""" # noqa,
+specifiy multiple values separated by commas""",  # noqa,
     )
     parser.add_option(
         "-C",
@@ -198,7 +198,7 @@ specifiy multiple values separated by commas""" # noqa,
         dest="columns",
         action="store",
         help="""include _only_ these columns. can be a column name or column index (from 0).
-specifiy multiple values separated by commas""" # noqa,
+specifiy multiple values separated by commas""",  # noqa,
     )
 
     return parser
