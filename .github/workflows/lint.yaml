@@ -10,7 +10,7 @@ jobs:
       - name: Ruffian
         uses: chartboost/ruff-action@v1
         with:
-          path: "./datascience_utilities/"
+          src: "./datascience_utilities/"
 
       - name: Black Source
         uses: psf/black@stable
