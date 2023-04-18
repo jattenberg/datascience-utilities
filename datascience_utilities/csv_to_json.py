@@ -21,10 +21,9 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 """
 import sys
+from optparse import OptionParser
 
 import pandas as pd
-
-from optparse import OptionParser
 
 
 def get_parser():

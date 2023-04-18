@@ -22,12 +22,12 @@ THE SOFTWARE.
 """
 
 
-from scipy.stats import stats, normaltest, sem, bayes_mvs
 import sys
 from optparse import OptionParser
+
 import numpy as np
 import pandas as pd
-from math import log
+from scipy.stats import bayes_mvs, normaltest, sem, stats
 
 from .utils import select_columns
 
@@ -132,7 +132,7 @@ def get_parser():
         usage="""presents a range of standard descriptive statistics
     on columns of numerical data
     perl -e 'for($i = 0; $i < 20; $i++){print rand(), "\\t", rand(), "\\t", rand(), "\\n"}' | python describe.py
-    Usage %prog [options]                                                                                
+    Usage %prog [options]
     """
     )
 

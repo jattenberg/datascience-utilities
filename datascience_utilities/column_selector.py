@@ -22,10 +22,11 @@ THE SOFTWARE.
 """
 
 import sys
-import pandas as pd
 from optparse import OptionParser
 
-from .utils import selector_parser, select_columns
+import pandas as pd
+
+from .utils import select_columns, selector_parser
 
 
 def get_parser():

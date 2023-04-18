@@ -25,10 +25,11 @@ THE SOFTWARE.
 
 
 import sys
-import matplotlib.pyplot as plt
 from math import log
-import pandas as pd
 from optparse import OptionParser
+
+import matplotlib.pyplot as plt
+import pandas as pd
 import seaborn as sns
 
 from .utils import select_columns

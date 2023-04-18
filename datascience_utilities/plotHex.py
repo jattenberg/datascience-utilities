@@ -25,10 +25,11 @@ THE SOFTWARE.
 
 import sys
 from math import log
-import pandas as pd
 from optparse import OptionParser
-from matplotlib.pyplot import *
+
+import pandas as pd
 import seaborn as sns
+from matplotlib.pyplot import *
 
 
 def get_parser():

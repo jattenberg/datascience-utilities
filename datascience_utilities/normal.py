@@ -24,7 +24,8 @@ THE SOFTWARE.
 """
 
 from optparse import OptionParser
-from numpy.random import normal, lognormal, seed
+
+from numpy.random import lognormal, normal, seed
 
 
 def get_parser():

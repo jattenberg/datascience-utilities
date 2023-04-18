@@ -23,17 +23,17 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 """
-import matplotlib
-
 import sys
-import numpy as np
 from math import log
-import pandas as pd
+
+import matplotlib
 import matplotlib.pyplot as plt
+import numpy as np
+import pandas as pd
 import seaborn as sns
 from statsmodels.nonparametric.smoothers_lowess import lowess
 
-from .utils import select_columns, option_parser
+from .utils import option_parser, select_columns
 
 
 def get_parser():

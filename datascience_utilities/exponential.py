@@ -24,6 +24,7 @@ THE SOFTWARE.
 """
 
 from optparse import OptionParser
+
 from numpy.random import exponential, seed
 
 

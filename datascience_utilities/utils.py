@@ -1,5 +1,6 @@
-import pandas as pd
 from optparse import OptionParser
+
+import pandas as pd
 
 
 def option_parser(usage):

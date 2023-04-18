@@ -26,6 +26,7 @@ import pandas as pd
 
 from .utils import option_parser
 
+
 def get_parser():
     parser = option_parser("""consume json data and emit it back as a csv""")
 
@@ -72,7 +73,7 @@ def get_parser():
         "--columns",
         action="store_true",
         dest="columns",
-        help="print the column names and exit"
+        help="print the column names and exit",
     )
 
     return parser
@@ -89,7 +90,7 @@ def main():
     if options.columns:
         output.write(options.delim.join(df.columns.values))
         return
-    
+
     df.to_csv(
         output,
         sep=options.delim,
