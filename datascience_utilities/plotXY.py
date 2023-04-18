@@ -24,11 +24,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 """
 import sys
-from math import log
 
-import matplotlib
 import matplotlib.pyplot as plt
-import numpy as np
 import pandas as pd
 import seaborn as sns
 from statsmodels.nonparametric.smoothers_lowess import lowess
@@ -39,8 +36,9 @@ from .utils import option_parser, select_columns
 def get_parser():
     parser = option_parser(
         """
-    Generate a plot from columnar numeric data. If no x value is specified, the index is used.
-    Usage %prog [options]                                                                                
+    Generate a plot from columnar numeric data.
+    If no x value is specified, the index is used.
+    Usage %prog [options]
     """
     )
 
@@ -90,7 +88,7 @@ def get_parser():
         action="store_true",
         dest="subplots",
         default=False,
-        help="use several subplots to represent data rather than multiple lines overlapped",
+        help="use several subplots to represent data rather than multiple lines overlapped", # noqa
     )
     parser.add_option(
         "-m",
@@ -122,21 +120,27 @@ def get_parser():
         dest="xcol",
         action="store",
         default=False,
-        help="use the specified column as the x-value in the generated plot. Can be a column name or column index (from 0)",
+        help="""use the specified column as the x-value
+in the generated plot. Can be a column
+name or column index (from 0)""",
     )
     parser.add_option(
         "-i",
         "--ignore",
         dest="ignore",
         action="store",
-        help="ignore the specified colums. can be a column name or column index (from 0). specifiy multiple values separated by commas",
+        help="""ignore the specified colums.
+can be a column name or column index (from 0).
+specifiy multiple values separated by commas""",
     )
     parser.add_option(
         "-C",
         "--columns",
         dest="columns",
         action="store",
-        help="include _only_ these columns. can be a column name or column index (from 0). specifiy multiple values separated by commas",
+        help="""include _only_ these columns.
+can be a column name or column index (from 0).
+specifiy multiple values separated by commas""",
     )
 
     parser.add_option(
@@ -208,9 +212,9 @@ def main():
 
     plt.legend(loc="best")
 
-    if options.ylabel != False:
+    if options.ylabel is not False:
         plt.ylabel(options.ylabel)
-    if options.xlabel != False:
+    if options.xlabel is not False:
         plt.xlabel(options.xlabel)
 
     sns.set_style("darkgrid")

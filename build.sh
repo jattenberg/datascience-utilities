@@ -4,7 +4,7 @@ set -e
 # assumes python 3.6, pip, virtualenv
 iterm=$1
 
-if ! command -v pipx &> /dev/null 
+if ! command -v pipx &> /dev/null
 then
     echo "pipx could not be found"
     pip install pipx;
@@ -15,7 +15,7 @@ fi
 
 
 pipx ensurepath
-pipx uninstall . 
+pipx uninstall .
 
 if [ "$iterm" = "iterm" ];
 then

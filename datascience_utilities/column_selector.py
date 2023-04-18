@@ -22,7 +22,6 @@ THE SOFTWARE.
 """
 
 import sys
-from optparse import OptionParser
 
 import pandas as pd
 
@@ -31,7 +30,9 @@ from .utils import select_columns, selector_parser
 
 def get_parser():
     parser = selector_parser(
-        "selects or ignores the supplied fields. Supports indices or column names if a header is supplied. similar to the linux command `cut`"
+        """selects or ignores the supplied fields.
+        Supports indices or column names if a header is supplied.
+        similar to the linux command `cut`"""
     )
 
     parser.add_option(

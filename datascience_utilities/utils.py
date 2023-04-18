@@ -1,7 +1,5 @@
 from optparse import OptionParser
 
-import pandas as pd
-
 
 def option_parser(usage):
     parser = OptionParser(usage=usage)
@@ -51,14 +49,18 @@ def selector_parser(usage):
         "--ignore",
         dest="ignore",
         action="store",
-        help="ignore the specified colums. can be a column name or column index (from 0). specifiy multiple values separated by commas",
+        help="""ignore the specified colums.
+can be a column name or column index (from 0).
+specifiy multiple values separated by commas""",
     )
     parser.add_option(
         "-C",
         "--columns",
         dest="columns",
         action="store",
-        help="include _only_ these columns. can be a column name or column index (from 0). specifiy multiple values separated by commas",
+        help="""include _only_ these columns.
+can be a column name or column index (from 0).
+specifiy multiple values separated by commas""",
     )
 
     return parser
@@ -70,10 +72,10 @@ def select_columns(df, ignore, keep, xcolumn=None):
 
     if ignore and keep:
         raise ValueError(
-            "must specify _either_ columns to ignore or columns to keep. you supplied both"
+            "must specify _either_ columns to ignore or columns to keep. you supplied both" # noqa
         )
 
-    should_keep = bool(keep)
+    bool(keep)
     specified = ignore.split(",") if ignore else keep.split(",")
 
     def _find_col(col):

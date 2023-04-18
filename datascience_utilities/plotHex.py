@@ -24,21 +24,19 @@ THE SOFTWARE.
 """
 
 import sys
-from math import log
 from optparse import OptionParser
 
 import pandas as pd
-import seaborn as sns
-from matplotlib.pyplot import *
+from matplotlib import pyplot as plt
 
 
 def get_parser():
 
     parser = OptionParser(
-        usage="""                                                                 
+        usage="""
     Generate a hexplot from new-line separated numerical data of the form x1, x2
     each column containing values that are to be compared in the hexplot
-    Usage %prog [options]                                                                                
+    Usage %prog [options]
     """
     )
     parser.add_option(
@@ -123,27 +121,27 @@ def main():
     else:
         raise LookupError("Unknown X column: %s" % options.x)
 
-    hexbin(
+    plt.hexbin(
         x.values,
         y.values,
         gridsize=int(options.bins),
         bins="log" if options.log_scale else None,
     )
-    xlabel(x.name)
-    ylabel(y.name)
-    colorbar()
+    plt.xlabel(x.name)
+    plt.ylabel(y.name)
+    plt.colorbar()
 
     try:
         import seaborn as sns
 
         sns.set_style("darkgrid")
-    except:
+    except ModuleNotFoundError:
         pass
 
     if options.out:
-        savefig(options.out)
+        plt.savefig(options.out)
     else:
-        show()
+        plt.show()
 
 
 if __name__ == "__main__":
