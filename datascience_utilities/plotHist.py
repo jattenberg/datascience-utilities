@@ -31,53 +31,22 @@ from optparse import OptionParser
 import matplotlib.pyplot as plt
 import pandas as pd
 
-from .utils import select_columns
+from .utils import select_columns, selector_parser
 
 # expects a list of pairs, x, #x
 
 
 def get_parser():
-    parser = OptionParser(
+    parser = selector_parser(
         usage="""
     Generate a histogram from new-line separated numerical data of the form x1, x2, ...
     each column containing values form a particular series to form a histogram over
     Usage %prog [options]
     """
     )
-    parser.add_option("-f", "--file", action="store", dest="filename", default=False)
     parser.add_option("-b", "--bins", action="store", dest="bins", default=50)
-    parser.add_option("-d", "--delim", action="store", dest="delim", default="\t")
-    parser.add_option(
-        "-H", "--header", action="store_true", dest="header", default=None
-    )
     parser.add_option(
         "-L", "--logscale", action="store_true", dest="log_scale", default=False
-    )
-    parser.add_option(
-        "-o",
-        "--out",
-        dest="out",
-        action="store",
-        default=False,
-        help="optional file path for saving the image",
-    )
-    parser.add_option(
-        "-i",
-        "--ignore",
-        dest="ignore",
-        action="store",
-        help="""ignore the specified colums.
-can be a column name or column index (from 0).
-specifiy multiple values separated by commas""",
-    )
-    parser.add_option(
-        "-C",
-        "--columns",
-        dest="columns",
-        action="store",
-        help="""include _only_ these columns.
-can be a column name or column index (from 0).
-specifiy multiple values separated by commas""",
     )
 
     return parser
