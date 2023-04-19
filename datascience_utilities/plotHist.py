@@ -26,7 +26,6 @@ THE SOFTWARE.
 
 import sys
 from math import log
-from optparse import OptionParser
 
 import matplotlib.pyplot as plt
 import pandas as pd
